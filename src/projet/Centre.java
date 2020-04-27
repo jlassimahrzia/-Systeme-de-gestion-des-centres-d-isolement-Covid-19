@@ -3,6 +3,7 @@ package projet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -157,7 +158,9 @@ public class Centre {
 	 */
 	
 	public void ajout_chambres() {
-		String csvFile = "C:/Users/ASUS/Desktop/ENSI/S2/c++/java/projet/files/chambre.csv";
+		String filePath = new File("").getAbsolutePath();
+		String csvFile = filePath.concat("/files/chambre.csv");
+		
         BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ";";
@@ -171,9 +174,27 @@ public class Centre {
         			System.out.println("Centre Complet");
         		}
                 else {
-                	 Chambre c = new Chambre(Integer.parseInt(chambre[0]),Integer.parseInt(chambre[1]),
+                	if(Integer.parseInt(chambre[3])==0) {
+                	  Chambre c = new Chambre(Integer.parseInt(chambre[0]),Integer.parseInt(chambre[1]),
                      		Integer.parseInt(chambre[2]),Integer.parseInt(chambre[3]));
-                     this.list_chambres.add(c);                	
+                	  this.list_chambres.add(c);  
+                	}
+                	else {
+                		if(! this.personne_estPresent(Integer.parseInt(chambre[3]))) {
+                			System.out.println("Ce personne n'existe pas dans la liste sous le num de CIN "
+                					+Integer.parseInt(chambre[3])+" des personnes affectées aux centres");
+                			Chambre c = new Chambre(Integer.parseInt(chambre[0]),Integer.parseInt(chambre[1]),
+                             		Integer.parseInt(chambre[2]));
+                			 c.setEtat(0);
+                			 this.list_chambres.add(c);  
+                		}
+                		else {
+                			Chambre c = new Chambre(Integer.parseInt(chambre[0]),Integer.parseInt(chambre[1]),
+                             		Integer.parseInt(chambre[2]),Integer.parseInt(chambre[3]));
+                			 this.list_chambres.add(c);  
+                		}
+                	}
+                                  	
                 }
                      
             }
@@ -201,11 +222,36 @@ public class Centre {
 	public Chambre getChambre(int num){		
 		for(Chambre c : list_chambres) {
 			if(c.getNum_chambre()==num) {
-				System.out.println("Personne existant");
+				System.out.println("chambre existant");
 				return c ;
 			}			
 		}
 		return null ;
+	}
+	public boolean Chambre_existe(int num){		
+		for(Chambre c : list_chambres) {
+			if(c.getNum_chambre()==num) {
+				System.out.println("chambre existant \n");
+				return true ;
+			}			
+		}
+		return false ;
+	}
+	
+	public void affecter_chambre(int numchambre ,int numpersonne) { 
+		if(this.Chambre_existe(numchambre)) {
+			Chambre c = this.getChambre(numchambre);
+			if(this.personne_estPresent(numpersonne)) {
+				c.affecter_chambre(numpersonne);
+			}
+			else {
+				System.out.println("n'existe pas dans la liste une personne sous le num de CIN "+
+						numpersonne);			
+			}
+		}
+		else {
+			System.out.println("n'existe pas une chambre sous cette numéro \n");
+		}
 	}
 	
 	/**

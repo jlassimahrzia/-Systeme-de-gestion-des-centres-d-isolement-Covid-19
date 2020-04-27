@@ -27,6 +27,9 @@ public class Chambre {
 	public int getEtat() {
 		return etat;
 	}
+	public void setEtat(int etat) {
+		 this.etat=etat;
+	}
 	public int getNum_personne() {
 		return num_personne;
 	}
@@ -34,15 +37,8 @@ public class Chambre {
 		return desinfecter;
 	}
 	
-	public void libérer_chambre() {
-		if(this.desinfecter==0)
-			this.etat=0;
-		else
-			System.out.println("Il faut désinfécter la chambre avant de le marquer libre \n");
-	}
-	
 	public void affecter_chambre (int num_personne) {
-		if(this.desinfecter==1)
+		if(this.getDesinfecter()==1)
 			System.out.println("Chambre infectée \n");
 		else if(this.etat==1)
 			System.out.println("Chambre occupée \n");
@@ -50,6 +46,14 @@ public class Chambre {
 			this.num_personne=num_personne;
 			this.etat = 1 ;
 			this.desinfecter = 1 ;
+	}
+	
+	
+	public void libérer_chambre() {
+		if(this.desinfecter==0)
+			this.etat=0;
+		else
+			System.out.println("Il faut désinfécter la chambre avant de le marquer libre \n");
 	}
 	
 	public void Nettoyer_chambre() {
