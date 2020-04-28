@@ -97,7 +97,7 @@ public class Personne {
 	    
 	        
 	      public void affiche(){
-	              System.out.printf("***********Information sur le personne************ \n");
+	              System.out.printf("***********Information sur la personne************ \n");
 	              System.out.printf("Numero de cin :" +num_cin+"\n");
 	              System.out.printf("Nom et prenom :"+nom+"\t"+prenom+"\n");
 	              if(genre=='f'||genre=='F')

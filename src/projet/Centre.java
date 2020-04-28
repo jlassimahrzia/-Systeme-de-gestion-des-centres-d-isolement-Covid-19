@@ -15,6 +15,7 @@ public class Centre {
 	String gouvernorat ;
 	int capacite ; 
 	int nombre_personnes ;
+	int nombre_per_tot;
 	ArrayList<Personne>  list_personnes ;
 	ArrayList<Chambre>  list_chambres ;
 	
@@ -26,6 +27,11 @@ public class Centre {
 		list_personnes = new ArrayList<Personne>();
 		this.nombre_personnes = list_personnes.size();	
 		list_chambres = new ArrayList<Chambre>();
+	}
+	
+	public String toString() {
+		return "Centre "+this.numero_ref+"\n Adresse : "+this.adresse+
+				"\n Gouvernorat : "+this.gouvernorat+" \n Capcité : "+this.capacite+" \n";
 	}
 	
 	/**
@@ -55,6 +61,10 @@ public class Centre {
 	}
 	public int getNombre_personnes() {
 		return nombre_personnes ;
+	}
+	public int get_nbr_per_tot()
+	{
+		return nombre_per_tot;	
 	}
 	
 	/**

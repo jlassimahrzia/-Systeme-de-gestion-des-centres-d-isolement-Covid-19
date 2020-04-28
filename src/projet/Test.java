@@ -65,6 +65,36 @@ public class Test {
         p1.affiche();
         p1.changer_etat(3);
         c.supprime_personne(12);
+        
+        /*test Gouvernorat */
+        
+        System.out.println("********** Gouvernorat **************");
+        Gouvernorat g,h;
+        Centre ce;
+        ce=new Centre(788,"sfax el jadida","sfax",7);
+        g=new Gouvernorat("sfax");
+        h=new Gouvernorat("nabeul");
+        g.ajouter_centre(ce);
+        System.out.println("******Liste des centres selon gouvernorat*****");
+        g.affiche_liste_centres();
+        //g.supprimer_centre(ce);
+        System.out.println(g.get_nom());
+       
+        /*test Gestion */
+        
+        System.out.println("********** Gestion **************");
+        Gestion ge;
+        ge=new Gestion();
+        ge.Ajouter_Gouvernorat(g);
+        ge.Supprimer_gouvernorat(h);
+        System.out.println("****liste des gouvernorat****");
+        ge.affiche_list_gouvernorat();
+        System.out.println("le nombre des conramination est "+ge.nbr_contamination()+"\n");
+        System.out.println("le nombre des personnes accueuillies est "+ge.nbr_personnes_acceillies()+"\n");
+        System.out.println("le pourcentage des contaminations pour le gouv sfax  est"+
+        		ge.pourcentage_contamination_gouv("sfax")+"\n");
+        System.out.println("le pourcentage de contamination pour le centre 555 est "+
+        		ge.pourcentage_contamination_cen(555)+"\n");
 	}
 
 }
