@@ -1,9 +1,21 @@
 package projet;
 
+
+
 public class Test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		/* Color test*/
+		// Il faut installer Ansi Escape in console 
+		/*
+		 * Help -> Eclispse Marketplace 
+		 * ecrice dans le recherche Ansi Escape in console  et installé
+		 */
+		/* Il faut ajouter ConsoleColors.RESET 
+		à la fin de chaque utilisation de couleur*/
+        System.out.println(ConsoleColors.BLUE+"Blue color"+ConsoleColors.RESET);
+		
 		/*Test Personne*/
 		System.out.println("********** PERSONNE **************");
 	    Personne p ,p1;

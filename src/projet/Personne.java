@@ -49,7 +49,7 @@ public class Personne {
 		  date_sortie= calcul_date_sortie( );
 	  }
 	  
-	  String calcul_date_sortie(){
+	  String calcul_date_sortie(){// jj/mm/aaaa
 		  String jour= date_entree.substring(0, 2);
 		  int  jj= Integer.parseInt(jour);
 		  String mois= date_entree.substring(3, 5);
