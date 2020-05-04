@@ -1,112 +1,38 @@
 package projet;
-
-
-
+import org.apache.commons.lang3.StringUtils;
 public class Test {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		/* Color test*/
-		// Il faut installer Ansi Escape in console 
-		/*
-		 * Help -> Eclispse Marketplace 
-		 * ecrice dans le recherche Ansi Escape in console  et installé
-		 */
-		/* Il faut ajouter ConsoleColors.RESET 
-		à la fin de chaque utilisation de couleur*/
-        System.out.println(ConsoleColors.BLUE+"Blue color"+ConsoleColors.RESET);
 		
-		/*Test Personne*/
-		System.out.println("********** PERSONNE **************");
-	    Personne p ,p1;
-        p = new Personne( 11, "nourhene","larguech",'f',"07/08/1997","kairouan",1,"08/04/2020");
-        p1 = new Personne( 12, "mahrzia","jlassi",'f',"07/08/1997","Bizerte",2,"23/04/2020");
-        p.setNum_chambre(3);
-        p.setNum_chambre(5);
-        p.affiche();
-        //p.changer_etat(2);
-        System.out.println("le nombre de jour restant  "+p.nb_jour_restant()+"\n");
+		int w = 120;
+		System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", w - 1, "-") + "+"+ConsoleColors.RESET);
+		System.out.println(ConsoleColors.BLUE_BOLD+StringUtils.center(StringUtils.center("BIENVENUE A NOTRE APPLICATION CONSOLE", w - 2), w, "|")+
+				ConsoleColors.RESET);
+		System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", w - 1, "-") + "+"+ConsoleColors.RESET);
+		
+		System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", w - 1, "-") + "+");
+		System.out.println(ConsoleColors.BLUE_BOLD+"                   _____ ______      _______ _____        __  ___     _____           _            \r\n" + 
+				"                  / ____/ __ \\ \\    / /_   _|  __ \\      /_ |/ _ \\   / ____|         | |           \r\n" + 
+				"                 | |   | |  | \\ \\  / /  | | | |  | |______| | (_) | | |     ___ _ __ | |_ _ __ ___ \r\n" + 
+				"                 | |   | |  | |\\ \\/ /   | | | |  | |______| |\\__, | | |    / _ \\ '_ \\| __| '__/ _ \\\r\n" + 
+				"                 | |___| |__| | \\  /   _| |_| |__| |      | |  / /  | |___|  __/ | | | |_| | |  __/\r\n" + 
+				"                  \\_____\\____/   \\/   |_____|_____/       |_| /_/    \\_____\\___|_| |_|\\__|_|  \\___|"
+		+ConsoleColors.RESET);
+		System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", w - 1, "-") + "+"+ConsoleColors.RESET);
         
-        /*Test Chambre*/
-        System.out.println("********** CHAMBRE **************");
-        Chambre c1 = new Chambre(1,0,1);
-        System.out.println(c1);
+        System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", w - 1, "-") + "+"+ConsoleColors.RESET);
+        System.out.println(ConsoleColors.BLUE_BOLD+StringUtils.center(StringUtils.center("MENU", w - 2), w, "|")+ConsoleColors.RESET);
+        System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", w - 1, "-") + "+"+ConsoleColors.RESET);
         
-        c1.affecter_chambre(11403758);
-        System.out.println(c1);
+        System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", w - 1, "-") + "+"+ConsoleColors.RESET);
+        System.out.println(ConsoleColors.BLUE_BOLD+StringUtils.center(StringUtils.center(
+        		  "1- A propos   "
+        		+ "2- Centre     "
+        		+ "3- Gouvernorat     "
+        		+ "4- Gestion totale ", w - 2), w, "|")+ConsoleColors.RESET);
+        System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", w - 1, "-") + "+"+ConsoleColors.RESET);
         
-        c1.libérer_chambre();
-        c1.Nettoyer_chambre();
-        
-        c1.libérer_chambre();
-        System.out.println(c1);
-        
-        /*TEST CENTRE*/
-        System.out.println("********** CENTRE **************");
-        Centre c = new Centre(132,"Bizerte ghar melh","Bizerte",5);
-        c.ajouter_personne(p);
-        c.ajouter_personne(p1);
-        c.affiche_list_personnes();
-        System.out.println("Nombre des personne est"+c.getNombre_personnes());
-        c.personne_estPresent(114);
-        
-        c.ajout_chambres();
-        c.affiche_list_chambres();
-        c.changer_etat(11, 3);
-        c.affiche_list_personnes();
-        c.nbr_jour_restant_personne(11);
-        System.out.println(c.getChambre(1));
-        System.out.println("****** list_personne_selon_etat ***** ");
-        c.list_personne_selon_etat(2);
-        System.out.println("****** list_personnes_sortes aujourd'hui ***** ");
-        c.list_personnes_sortes();
-        System.out.println("****** list chambres libres infécter  ***** ");
-        System.out.println("nombres des chambres libres et infécter "+c.nombre_chambre_libre_infecter());
-        c.list_chambre_libre_infecter();
-        System.out.println("****** list chambres libres déinfécter  ***** ");
-        System.out.println("nombres des chambres libres et déinfécter "+c.nombre_chambre_libre_desinfecter());
-        c.list_chambre_libre_desinfecter();
-        System.out.println("****** list chambres occupées  ***** ");
-        System.out.println("nombres des chambres occupées "+c.nombre_chambres_occupees());
-        c.list_chambre_occupees();
-        // Tous les test de sortie
-        c.supprime_personne(5);
-        //c.changer_etat(11, 2);
-        c.changer_etat(11, 3);
-        c.supprime_personne(11);
-        p1.affiche();
-        p1.changer_etat(3);
-        c.supprime_personne(12);
-        
-        /*test Gouvernorat */
-        
-        System.out.println("********** Gouvernorat **************");
-        Gouvernorat g,h;
-        Centre ce;
-        ce=new Centre(788,"sfax el jadida","sfax",7);
-        g=new Gouvernorat("sfax");
-        h=new Gouvernorat("nabeul");
-        g.ajouter_centre(ce);
-        System.out.println("******Liste des centres selon gouvernorat*****");
-        g.affiche_liste_centres();
-        //g.supprimer_centre(ce);
-        System.out.println(g.get_nom());
-       
-        /*test Gestion */
-        
-        System.out.println("********** Gestion **************");
-        Gestion ge;
-        ge=new Gestion();
-        ge.Ajouter_Gouvernorat(g);
-        ge.Supprimer_gouvernorat(h);
-        System.out.println("****liste des gouvernorat****");
-        ge.affiche_list_gouvernorat();
-        System.out.println("le nombre des conramination est "+ge.nbr_contamination()+"\n");
-        System.out.println("le nombre des personnes accueuillies est "+ge.nbr_personnes_acceillies()+"\n");
-        System.out.println("le pourcentage des contaminations pour le gouv sfax  est"+
-        		ge.pourcentage_contamination_gouv("sfax")+"\n");
-        System.out.println("le pourcentage de contamination pour le centre 555 est "+
-        		ge.pourcentage_contamination_cen(555)+"\n");
+        System.out.println(ConsoleColors.RED_BOLD+ConsoleColors.RED_UNDERLINED+"Tapez le numéro de la section que vous voulez l'accéder :"+ConsoleColors.RESET);
 	}
 
 }
