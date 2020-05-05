@@ -10,14 +10,14 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 public class Centre {
-	int numero_ref ;
-	String adresse ;
-	String gouvernorat ;
-	int capacite ; 
-	int nombre_personnes ;
-	int nombre_per_tot;
-	ArrayList<Personne>  list_personnes ;
-	ArrayList<Chambre>  list_chambres ;
+	private int numero_ref ;
+	private String adresse ;
+	private String gouvernorat ;
+	private int capacite ; 
+	private int nombre_personnes ;
+	private int nombre_per_tot;
+	private ArrayList<Personne>  list_personnes ;
+	private ArrayList<Chambre>  list_chambres ;
 	
 	public Centre(int numero_ref, String adresse, String gouvernorat, int capacite) {
 		this.numero_ref = numero_ref;
@@ -167,7 +167,7 @@ public class Centre {
 		if(personne_estPresent(cin)) {
 			p = this.getPersonne(cin);
 			System.out.println("le nombre de jours restants de la personne de num cin "+cin+" est "
-					+ p.nb_jour_restant()+" jour son date de sortie est "+p.date_sortie);
+					+ p.nb_jour_restant()+" jour son date de sortie est "+p.getDate_sortie());
 		}
 		else {
 			System.out.println("le personne de num de cin "+cin+" n'existe pas dans ce centre");
@@ -195,7 +195,7 @@ public class Centre {
 			else {
 				if(p.nb_jour_restant()!=0) {
 					System.out.println("le personne de num cin "+cin+" n'est finir ses 14 jours il le reste "
-							+ p.nb_jour_restant()+" jour leur date de sortie est "+p.date_sortie);
+							+ p.nb_jour_restant()+" jour leur date de sortie est "+p.getDate_sortie());
 				}
 				else {
 					this.list_personnes.remove(p);

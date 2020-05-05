@@ -1,4 +1,6 @@
 package projet;
+import java.util.ArrayList;
+
 import org.apache.commons.lang3.StringUtils;
 public class Test {
 
@@ -33,6 +35,32 @@ public class Test {
         System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", w - 1, "-") + "+"+ConsoleColors.RESET);
         
         System.out.println(ConsoleColors.RED_BOLD+ConsoleColors.RED_UNDERLINED+"Tapez le numéro de la section que vous voulez l'accéder :"+ConsoleColors.RESET);
+	
+        /**
+         * Pour l'affichage du tableau
+         * 1- Récupérer ArrayList que vous voulez afficher
+         * 2- Titre des données à afficher en rouge gras
+         * 3- convertir list en String[][] avec tableConsole.changeformat_centre(list); 
+         * il existe changeformat_centre et gouvernorat et personne et chambre
+         * 4- tableConsole.tableWithLinesAndMaxWidth(t);
+         * exemple
+         */
+        Centre c = new Centre(132,"Bizerte ghar melh","Bizerte",5);
+        Centre c1 = new Centre(13244,"tunis","tunis",5);
+        
+        ArrayList<Centre> list= new ArrayList<Centre>();
+        list.add(c1);
+        list.add(c);
+        
+        String[][] t = tableConsole.changeformat_centre(list);
+        tableConsole.tableWithLinesAndMaxWidth(t);
+        
+	
+	
+	
+	
+	
+	
 	}
 
 }

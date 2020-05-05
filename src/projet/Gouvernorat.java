@@ -11,8 +11,8 @@ import java.util.*;
 
 public class Gouvernorat {
 	
-	String nom ;
-	ArrayList<Centre> list_Centres ;
+	private String nom ;
+	private ArrayList<Centre> list_Centres ;
 		
 	public Gouvernorat(String ch)
 	{ 

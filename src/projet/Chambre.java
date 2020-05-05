@@ -1,10 +1,10 @@
 package projet;
 
 public class Chambre {
-	int num_chambre ;
-	int etat ; /* 0:libre 1:occupé */
-	int desinfecter ; /* 0:desinfecter 1:non */
-	int num_personne ;/* c'est le numéro de CIN par défaut 0 */
+	private int num_chambre ;
+	private int etat ; /* 0:libre 1:occupé */
+	private int desinfecter ; /* 0:desinfecter 1:non */
+	private int num_personne ;/* c'est le numéro de CIN par défaut 0 */
 	
 	public Chambre(int num_chambre, int etat, int desinfecter) {
 		this.num_chambre = num_chambre;

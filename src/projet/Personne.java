@@ -6,14 +6,14 @@ import java.util.Date;
 
 public class Personne {
 
-	  int num_cin;
-	  String nom;
-	  String prenom;
-	  char genre ;
-	  String date_naissance;/* sous forme jj/mm/aaaa*/
-	  String gouvernerat;
-	  int num_chambre;
-	  int etat;
+	private int num_cin;
+	private String nom;
+	private String prenom;
+	private char genre ;
+	private String date_naissance;/* sous forme jj/mm/aaaa*/
+	private String gouvernerat;
+	private int num_chambre;
+	private int etat;
 	   /*
 	     intialitation par defaut par 0
 	      1:maladie confirmé eu des problèmes de santé:
@@ -25,13 +25,13 @@ public class Personne {
 	      3: personne n’a eu aucun symptôme  après 14 jours:
 	         enregistrement de son sortie 
 	    */
-	  int type_contamination;
+	private int type_contamination;
 	    /*
 	       0:un contact avec une personne malade 
 	       1:venant de l'etranger
 	     */
-	  String date_entree;
-	  String date_sortie;
+	private String date_entree;
+	private String date_sortie;
 	      
 	  public Personne(int num_cin,String nom,String prenom,char genre,String date_naissance,
 	           String gouvernerat,int type_contamination,String date_entree){

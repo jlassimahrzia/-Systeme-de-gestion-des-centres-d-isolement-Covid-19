@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Gestion {
 	
-	ArrayList<Gouvernorat> list_Gouvernorats;
+	private ArrayList<Gouvernorat> list_Gouvernorats;
 	
 	public Gestion()
 	{
