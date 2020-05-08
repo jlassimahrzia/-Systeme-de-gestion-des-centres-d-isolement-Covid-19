@@ -68,7 +68,7 @@ public class tableConsole {
 				t[i+1][8]="grace à un contact";
 			}
 			t[i+1][9]=list.get(i).getDate_entree();
-			t[i+1][9]=list.get(i).getDate_sortie();
+			t[i+1][10]=list.get(i).getDate_sortie();
 		}
 		return t;
 	}

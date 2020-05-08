@@ -1,4 +1,9 @@
 package projet;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Gestion {
@@ -9,16 +14,254 @@ public class Gestion {
 	{
 		list_Gouvernorats = new ArrayList<Gouvernorat>() ;
 	}
+	/*
+	 * INITIALISATION
+	 */
+	public void init_gouvernorat() {
+		String filePath = new File("").getAbsolutePath();
+		String csvFile = filePath.concat("/files/initgouv.csv");
+		
+        BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ";";
+        try {
+            br = new BufferedReader(new FileReader(csvFile));
+            while ((line = br.readLine()) != null) {
+                // use comma as separator
+                String[] g = line.split(cvsSplitBy);
+                Gouvernorat gouv = new Gouvernorat(g[0]) ;
+                this.Ajouter_Gouvernorat(gouv);    
+               
+            }                
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+	}
+	
+	/**
+	 * Initialisation des centre
+	 */
+	
+	public void init_centre() {
+		String filePath = new File("").getAbsolutePath();
+		String csvFile = filePath.concat("/files/initcentre.csv");
+		
+        BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ";";
+        try {
+            br = new BufferedReader(new FileReader(csvFile));
+            while ((line = br.readLine()) != null) {
+                // use comma as separator
+                String[] centre = line.split(cvsSplitBy);
+                if(this.gouvernorat_existe(centre[2])) {
+                   if(!this.cente_existe(Integer.parseInt(centre[0]))) {
+                	 Gouvernorat g = this.get_Gouvernorat(centre[2]);
+                	 Centre c = new Centre(Integer.parseInt(centre[0]),centre[1],centre[2],Integer.parseInt(centre[3])) ;                             
+                	 g.ajouter_centre(c);                	 
+                   }  
+                }
+            }                
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+	}
+	
+	/**
+	 * Initialisation des chambre
+	 */
+	public void initchambre(String file, int numcentre) {
+		String filePath = new File("").getAbsolutePath();
+		String csvFile = filePath.concat(file);
+		
+        BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ";";
+
+        try {
+            br = new BufferedReader(new FileReader(csvFile));
+            while ((line = br.readLine()) != null) {
+                // use comma as separator
+                String[] chambre = line.split(cvsSplitBy);
+                if(this.cente_existe(numcentre)) {
+                	Centre c = this.get_cente(numcentre);               
+	                if(c.getCapacite()<=c.getList_chambres().size()) {
+	        			System.out.println("Centre Complet");
+	        		}
+	                else {
+	                	if(Integer.parseInt(chambre[3])==0) {
+	                	  Chambre ch = new Chambre(Integer.parseInt(chambre[0]),Integer.parseInt(chambre[1]),
+	                     		Integer.parseInt(chambre[2]),Integer.parseInt(chambre[3]));
+	                	  c.ajout_chambres(ch); 
+	                	}	                
+	                	else {
+	                		if(! c.personne_estPresent(Integer.parseInt(chambre[3]))) {
+	                			/*System.out.println("Ce personne n'existe pas dans la liste sous le num de CIN "
+	                					+Integer.parseInt(chambre[3])+" des personnes affectées aux centres");*/
+	                			Chambre ch = new Chambre(Integer.parseInt(chambre[0]),Integer.parseInt(chambre[1]),
+	                             		Integer.parseInt(chambre[2]));
+	                			 ch.setEtat(0);
+	                			 c.ajout_chambres(ch); 
+	                		}
+	                		else {
+	                			Chambre ch = new Chambre(Integer.parseInt(chambre[0]),Integer.parseInt(chambre[1]),
+	                             		Integer.parseInt(chambre[2]),Integer.parseInt(chambre[3]));
+	                			Personne p = c.getPersonne(Integer.parseInt(chambre[3]));
+	                			p.setNum_chambre(Integer.parseInt(chambre[0]));
+	                			c.ajout_chambres(ch);  
+	                		}
+	                	}                                	
+	                }
+                }
+                     
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+	}
+	
+	/**
+	 * Initialisation des personne
+	 */
+	public void initpersonne(String file, int numcentre) {
+		String filePath = new File("").getAbsolutePath();
+		String csvFile = filePath.concat(file);
+		
+        BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ";";
+
+        try {
+            br = new BufferedReader(new FileReader(csvFile));
+            while ((line = br.readLine()) != null) {
+                // use comma as separator
+                String[] personne = line.split(cvsSplitBy);
+                if(this.cente_existe(numcentre)) {
+                	Centre c = this.get_cente(numcentre);
+	                Personne p = new Personne(Integer.parseInt(personne[0]),personne[1],personne[2],personne[3].charAt(0),personne[4]
+	                		,personne[5], Integer.parseInt(personne[6]),personne[7],Integer.parseInt(personne[8]));    
+	                c.ajouter_personne(p);
+	            }
+                     
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+	}
+	
 	
 	public boolean gouvernorat_existe(String ch)
 	{
 		for(Gouvernorat g  : list_Gouvernorats) {
 			 { 
-				 if (g.get_nom()== ch )
-				 return true ;
+				 if (g.get_nom().equals(ch))
+					 return true ;
+			 }			
+		}		
+		return false ;
+	}
+	
+	public boolean gouvernorat_existev2(String ch)
+	{
+		boolean ok = false ; 
+		for(Gouvernorat g  : list_Gouvernorats) {
+			 { 
+				 if (g.get_nom().equals(ch))
+					 ok = true ;
 			 }			
 		}
-		return false ;
+		if(!ok) {
+			System.out.println(ConsoleColors.RED+"Gouvernorat "+ch+" n'existe pas "+ConsoleColors.RESET);
+		}
+		return ok ;
+	}
+	public boolean gouvernorat_existev3(String ch)
+	{
+		boolean ok = false ; 
+		for(Gouvernorat g  : list_Gouvernorats) {
+			 { 
+				 if (g.get_nom().equals(ch))
+					 ok = true ;
+			 }			
+		}
+		if(ok) {
+			System.out.println(ConsoleColors.RED+"Gouvernorat "+ch+" existe pas "+ConsoleColors.RESET);
+		}
+		return ok ;
+	}
+	
+	public boolean cente_existe(int num) {
+		for(Gouvernorat g  : list_Gouvernorats) {
+			 { 
+				 if (g.centre_existe(num))
+					 return true ;
+			 }			
+		}
+		return false;		
+	}
+	public Centre get_cente(int num) {
+		for(Gouvernorat g  : list_Gouvernorats) {
+			 { 
+				 if (g.centre_existe(num))
+					 return g.get_centre(num) ;
+			 }			
+		}
+		return null;		
+	}
+	
+	public Gouvernorat get_Gouvernorat(String nom) {
+		if(gouvernorat_existe(nom)) {
+			for(Gouvernorat g  : list_Gouvernorats) {
+				 { 
+					 if (g.get_nom().equals(nom))
+						 return g ;
+				 }			
+			}
+		}
+		else {
+			System.out.println(ConsoleColors.RED+"Gouvernorat sous le nom "+ nom +" n'existe pas"+ConsoleColors.RESET);			
+		}
+		return null;	
 	}
 	
 	public void Ajouter_Gouvernorat(Gouvernorat g)
@@ -67,7 +310,8 @@ public class Gestion {
 		{	
 			for (Centre c : g.get_list_Centres())
 			{ 
-				n+= c.get_nbr_per_tot(); 
+				//n+= c.get_nbr_per_tot(); 
+				n+=c.getNombre_personnes();
 			}
 		}
 		return (n);
@@ -75,8 +319,9 @@ public class Gestion {
 	
 	//pourcentage de contamination total
 	public float pourcentage_contamination()
-	{   
-		float p=nbr_contamination()/nbr_personnes_acceillies()*100;
+	{   float p=0;
+		if(nbr_personnes_acceillies()!=0)
+			 p=nbr_contamination()/nbr_personnes_acceillies()*100;
 		return (p);
 	}
 	
@@ -157,9 +402,10 @@ public class Gestion {
 	}
 	
 	public void affiche_list_gouvernorat()
-	{
+	{		
 		for(Gouvernorat g:list_Gouvernorats)
 		{
+			System.out.println(g.get_nom());
 			g.affiche_liste_centres();
 		}
 	}

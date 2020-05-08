@@ -19,6 +19,18 @@ public class Centre {
 	private ArrayList<Personne>  list_personnes ;
 	private ArrayList<Chambre>  list_chambres ;
 	
+	public ArrayList<Personne> getList_personnes() {
+		return list_personnes;
+	}
+
+	public ArrayList<Chambre> getList_chambres() {
+		return list_chambres;
+	}
+	
+	public int getNombre_per_tot() {
+		return nombre_per_tot;
+	}
+		
 	public Centre(int numero_ref, String adresse, String gouvernorat, int capacite) {
 		this.numero_ref = numero_ref;
 		this.adresse = adresse;
@@ -77,7 +89,7 @@ public class Centre {
 		}
 	}
 	
-	/*public void ajouter_personne (Personne p) {
+	public void ajouter_personne (Personne p) {
 		if(this.capacite<=this.nombre_personnes) {
 			System.out.println("Centre Complet");
 		}
@@ -85,24 +97,21 @@ public class Centre {
 			this.list_personnes.add(p);
 			this.nombre_personnes++;
 		}
-	}*/
-	public void ajouter_personne (Personne p) throws IOException {
-		if(this.capacite<=this.nombre_personnes) {
-			
+	}
+	public void ajouter_personnev2(Personne p) throws IOException {
+		if(this.capacite<=this.nombre_personnes) {			
 			System.out.println("Centre Complet");
             Gouvernorat g=new Gouvernorat(gouvernorat);
             ArrayList <Centre>  listecentre;
             listecentre=g.get_list_Centres();
-            int b=0;
-            
+            int b=0;           
             for(Centre c:  listecentre ){
                 if((c.capacite>c.nombre_personnes)&&(b==0)){
 	                c.list_personnes.add(p);
 				    c.nombre_personnes++;  
                     b=1;
                  }
-            }
-               
+            }               
             if(b==0){
               String[] t= g.Distance();
               int i=1;
@@ -131,12 +140,25 @@ public class Centre {
 
 	// Vérifier l'existance de personne dans la centre
 	public boolean personne_estPresent(int cin) {
+		
 		for(Personne p : list_personnes) {
 			if(p.getNum_cin()==cin) {
 				return true ;
 			}			
 		}
 		return false ;
+	}
+	public boolean personne_estPresentv2(int cin) {
+		boolean ok = false ;
+		for(Personne p : list_personnes) {
+			if(p.getNum_cin()==cin) {
+				ok= true ;
+			}			
+		}
+		if(ok) {
+			System.out.println(ConsoleColors.RED+"Personne du num cin "+cin+" existe déja "+ConsoleColors.RESET);
+		}
+		return ok ;
 	}
 	
 	public Personne getPersonne(int cin){
@@ -178,28 +200,29 @@ public class Centre {
 	public void supprime_personne(int cin) {
 		Personne p ;
 		if(!personne_estPresent(cin)) {
-			System.out.println("le personne de num de cin "+cin+" n'existe pas dans ce centre");
+			System.out.println(ConsoleColors.RED+"le personne de num de cin "+cin+" n'existe pas dans ce centre"
+					+ConsoleColors.RESET);
 		}
 		else {
 			p = this.getPersonne(cin);
 			if(p.getEtat()!=3) {
 				if(p.getEtat()==2) {
-					System.out.println("Personne de num de cin "+cin+" est malade mais sans symptômes"
-							+ " graves ne peut pas sortir de la centre il faut élargir son période");
+					System.out.println(ConsoleColors.RED+"Personne de num de cin "+cin+" est malade mais sans symptômes"
+							+ " graves ne peut pas sortir de la centre il faut élargir son période"+ConsoleColors.RESET);
 				}
 				else if(p.getEtat()==1) {
 					this.list_personnes.remove(p);
-					System.out.println("Suppressin avec succées");
+					System.out.println(ConsoleColors.GREEN+"Suppressin avec succées"+ConsoleColors.RESET);
 				}
 			}
 			else {
 				if(p.nb_jour_restant()!=0) {
-					System.out.println("le personne de num cin "+cin+" n'est finir ses 14 jours il le reste "
-							+ p.nb_jour_restant()+" jour leur date de sortie est "+p.getDate_sortie());
+					System.out.println(ConsoleColors.RED+"le personne de num cin "+cin+" n'est finir ses 14 jours il le reste "
+							+ p.nb_jour_restant()+" jour leur date de sortie est "+p.getDate_sortie()+ConsoleColors.RESET);
 				}
 				else {
 					this.list_personnes.remove(p);
-					System.out.println("Suppressin avec succées");
+					System.out.println(ConsoleColors.GREEN+"Suppressin avec succées"+ConsoleColors.RESET);
 				}
 			}
 		}
@@ -209,60 +232,8 @@ public class Centre {
 	 * Gestion Des Chambres
 	 */
 	
-	public void ajout_chambres() {
-		String filePath = new File("").getAbsolutePath();
-		String csvFile = filePath.concat("/files/chambre.csv");
-		
-        BufferedReader br = null;
-        String line = "";
-        String cvsSplitBy = ";";
-
-        try {
-            br = new BufferedReader(new FileReader(csvFile));
-            while ((line = br.readLine()) != null) {
-                // use comma as separator
-                String[] chambre = line.split(cvsSplitBy);
-                if(this.capacite<=this.list_chambres.size()) {
-        			System.out.println("Centre Complet");
-        		}
-                else {
-                	if(Integer.parseInt(chambre[3])==0) {
-                	  Chambre c = new Chambre(Integer.parseInt(chambre[0]),Integer.parseInt(chambre[1]),
-                     		Integer.parseInt(chambre[2]),Integer.parseInt(chambre[3]));
-                	  this.list_chambres.add(c);  
-                	}
-                	else {
-                		if(! this.personne_estPresent(Integer.parseInt(chambre[3]))) {
-                			System.out.println("Ce personne n'existe pas dans la liste sous le num de CIN "
-                					+Integer.parseInt(chambre[3])+" des personnes affectées aux centres");
-                			Chambre c = new Chambre(Integer.parseInt(chambre[0]),Integer.parseInt(chambre[1]),
-                             		Integer.parseInt(chambre[2]));
-                			 c.setEtat(0);
-                			 this.list_chambres.add(c);  
-                		}
-                		else {
-                			Chambre c = new Chambre(Integer.parseInt(chambre[0]),Integer.parseInt(chambre[1]),
-                             		Integer.parseInt(chambre[2]),Integer.parseInt(chambre[3]));
-                			 this.list_chambres.add(c);  
-                		}
-                	}
-                                  	
-                }
-                     
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+	public void ajout_chambres(Chambre c) {
+		this.list_chambres.add(c);
 	}
 	
 	public void affiche_list_chambres() {
@@ -274,7 +245,6 @@ public class Centre {
 	public Chambre getChambre(int num){		
 		for(Chambre c : list_chambres) {
 			if(c.getNum_chambre()==num) {
-				System.out.println("chambre existant");
 				return c ;
 			}			
 		}
@@ -283,26 +253,27 @@ public class Centre {
 	public boolean Chambre_existe(int num){		
 		for(Chambre c : list_chambres) {
 			if(c.getNum_chambre()==num) {
-				System.out.println("chambre existant \n");
 				return true ;
 			}			
 		}
 		return false ;
 	}
 	
-	public void affecter_chambre(int numchambre ,int numpersonne) { 
+	public boolean affecter_chambre(int numchambre ,int numpersonne) { 
 		if(this.Chambre_existe(numchambre)) {
 			Chambre c = this.getChambre(numchambre);
 			if(this.personne_estPresent(numpersonne)) {
-				c.affecter_chambre(numpersonne);
+				return c.affecter_chambre(numpersonne);
 			}
 			else {
 				System.out.println("n'existe pas dans la liste une personne sous le num de CIN "+
-						numpersonne);			
+						numpersonne);		
+				return false ;
 			}
 		}
 		else {
 			System.out.println("n'existe pas une chambre sous cette numéro \n");
+			return false;
 		}
 	}
 	
@@ -321,9 +292,6 @@ public class Centre {
         		list.add(p);
         	}
         }
-        for(Personne p : list) {
-        	p.affiche();
-        }
 		return list ;
 	}
 	
@@ -334,9 +302,7 @@ public class Centre {
         		list.add(p);
         	}
         }
-		for(Personne p : list) {
-        	p.affiche();
-        }
+		
 		return list ;
 	}
 	
@@ -359,9 +325,6 @@ public class Centre {
 				list.add(c);
 			}
 		}
-		for(Chambre c : list) {
-			System.out.println(c);
-		}
 		return list ;
 	}
 	public int nombre_chambre_libre_desinfecter() {
@@ -379,9 +342,6 @@ public class Centre {
 			if(c.getEtat()==0 && c.getDesinfecter()==0) {
 				list.add(c);
 			}
-		}
-		for(Chambre c : list) {
-			System.out.println(c);
 		}
 		return list ;
 	}
@@ -402,9 +362,6 @@ public class Centre {
 			if(c.getEtat()==1) {
 				list.add(c);
 			}
-		}
-		for(Chambre c : list) {
-			System.out.println(c);
 		}
 		return list ;
 	}

@@ -37,23 +37,33 @@ public class Chambre {
 		return desinfecter;
 	}
 	
-	public void affecter_chambre (int num_personne) {
-		if(this.getDesinfecter()==1)
+	public boolean affecter_chambre (int num_personne) {
+		if(this.getDesinfecter()==1) {
 			System.out.println("Chambre infectée \n");
-		else if(this.etat==1)
+			return false;
+		}
+		else if(this.etat==1) {
 			System.out.println("Chambre occupée \n");
-		else 
+			return false ;
+		}
+		else {
 			this.num_personne=num_personne;
 			this.etat = 1 ;
 			this.desinfecter = 1 ;
+			return true ;
+		}
 	}
 	
 	
 	public void libérer_chambre() {
-		if(this.desinfecter==0)
+		if(this.desinfecter==0) {
 			this.etat=0;
+			System.out.println(ConsoleColors.GREEN+"Chambre libérées avec succées \n"
+					+ConsoleColors.RESET);
+		}
 		else
-			System.out.println("Il faut désinfécter la chambre avant de le marquer libre \n");
+			System.out.println(ConsoleColors.RED+"Il faut désinfécter la chambre avant de le marquer libre \n"
+					+ConsoleColors.RESET);
 	}
 	
 	public void Nettoyer_chambre() {

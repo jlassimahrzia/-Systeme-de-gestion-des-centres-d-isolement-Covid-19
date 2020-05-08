@@ -19,6 +19,10 @@ public class Gouvernorat {
 		this.nom = ch ;
 	    this.list_Centres= new ArrayList<Centre>();
 	}
+	public Gouvernorat()
+	{ 
+		
+	}
 	
 	public boolean centre_existe(int n) {
 		for(Centre c : this.list_Centres) {
@@ -27,13 +31,25 @@ public class Gouvernorat {
 			}			
 		return false ;
 	}
+	public boolean centre_existev2(int n) {
+		boolean ok = false ;
+		if(this.list_Centres.size()!=0) {
+			for(Centre c : this.list_Centres) {
+				if (c.getNumero_ref() == n )
+					ok= true ;
+			}
+		}				
+		if(ok) {
+			System.out.println(ConsoleColors.RED+"Centre existe déja"+ConsoleColors.RESET);
+		}
+		return ok ;
+	}
 		
 	public void ajouter_centre ( Centre c )
 	{	
 		if (!centre_existe(c.getNumero_ref()))
 		{
-			this.list_Centres.add (c) ;
-			System.out.println("Ajout de centre avec succée \n");
+			this.list_Centres.add (c) ;			
 		}
 		else
 		{
@@ -51,6 +67,7 @@ public class Gouvernorat {
 		else 
 			System.out.println("le centre n'existe pas \n");
 	}
+	
 	
 	public Centre get_centre(int numRefCentre)
 	{

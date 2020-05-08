@@ -48,8 +48,39 @@ public class Personne {
 		  //Calcule date de sortie 
 		  date_sortie= calcul_date_sortie( );
 	  }
+	     
+		  public Personne(int num_cin,String nom,String prenom,char genre,String date_naissance,
+		           String gouvernerat,int type_contamination,String date_entree,int etat){
+			  this.num_cin=num_cin;
+			  this.nom=nom;
+			  this.prenom=prenom;
+			  this.genre=genre;
+			  this.date_naissance=date_naissance;
+			  this.gouvernerat=gouvernerat;
+			  this.num_chambre=0;
+			  this.etat=etat;
+			  this.type_contamination=type_contamination;
+			  this.date_entree=date_entree;
+			  //Calcule date de sortie 
+			  date_sortie= calcul_date_sortie( );
+		  }
+	  public Personne(int num_cin,String nom,String prenom,char genre,String date_naissance,
+	           String gouvernerat,int type_contamination,int etat){
+		  this.num_cin=num_cin;
+		  this.nom=nom;
+		  this.prenom=prenom;
+		  this.genre=genre;
+		  this.date_naissance=date_naissance;
+		  this.gouvernerat=gouvernerat;
+		  this.num_chambre=0;
+		  this.etat=etat;
+		  this.type_contamination=type_contamination;
+		  this.date_entree=this.currentday();
+		  //Calcule date de sortie 
+		  this.date_sortie= calcul_date_sortie( );
+	  }
 	  
-	  String calcul_date_sortie(){// jj/mm/aaaa
+	 public String calcul_date_sortie(){// jj/mm/aaaa
 		  String jour= date_entree.substring(0, 2);
 		  int  jj= Integer.parseInt(jour);
 		  String mois= date_entree.substring(3, 5);
@@ -97,20 +128,20 @@ public class Personne {
 	    
 	        
 	      public void affiche(){
-	              System.out.printf("***********Information sur la personne************ \n");
-	              System.out.printf("Numero de cin :" +num_cin+"\n");
-	              System.out.printf("Nom et prenom :"+nom+"\t"+prenom+"\n");
+	              /*System.out.printf("***********Information sur la personne************ \n");
+	              System.out.printf("Numero de cin :" +num_cin+"\n");*/
+	              System.out.printf(ConsoleColors.BLACK_BOLD+ConsoleColors.BLACK_UNDERLINED+"Nom et prenom :"+ConsoleColors.RESET+" "+nom+"  "+prenom+"\n");
 	              if(genre=='f'||genre=='F')
-	                System.out.printf("genre : féminin"+"\n");
+	                System.out.printf(ConsoleColors.BLACK_BOLD+ConsoleColors.BLACK_UNDERLINED+"genre :"+ConsoleColors.RESET+" "+"féminin"+"\n");
 	              else 
-	                 System.out.printf("genre : Masculin"+"\n");
-	                 System.out.printf("Date de naissance :"+date_naissance+"\n");
-	                 System.out.printf("Gouvernorat :"+gouvernerat+"\n");
+	                 System.out.printf(ConsoleColors.BLACK_BOLD+ConsoleColors.BLACK_UNDERLINED+"genre :"+ConsoleColors.RESET+" "+"Masculin"+"\n");
+	                 System.out.printf(ConsoleColors.BLACK_BOLD+ConsoleColors.BLACK_UNDERLINED+"Date de naissance :"+ConsoleColors.RESET+" "+date_naissance+"\n");
+	                 System.out.printf(ConsoleColors.BLACK_BOLD+ConsoleColors.BLACK_UNDERLINED+"Gouvernorat :"+ConsoleColors.RESET+" "+gouvernerat+"\n");
 	                if(num_chambre==0){
-	                  System.out.printf("Pas de chambre ."+"\n");
+	                  System.out.printf(ConsoleColors.BLACK_BOLD+ConsoleColors.BLACK_UNDERLINED+"Pas de chambre ."+"\n"+ConsoleColors.RESET+" ");
 	                }
 	                else 
-	                    System.out.printf("Numéro de chambre :"+num_chambre+"\n");
+	                    System.out.printf(ConsoleColors.BLACK_BOLD+ConsoleColors.BLACK_UNDERLINED+"Numéro de chambre :"+ConsoleColors.RESET+" "+num_chambre+"\n");
 	                
 	                switch(etat){
 	                    case 0:System.out.printf("Nouveau personne ne depasse pas 14 jour ."+"\n");break;
@@ -122,15 +153,22 @@ public class Personne {
 	                    case 3:System.out.printf("personne n’a eu aucun symptôme  après 14 jours:\n" +
 	                                             " enregistrement de son sortie"+"\n");break;
 	                }
-	                    if(type_contamination==0)System.out.printf(" type_contamination :un contact avec une personne malade \n");
-	                    else System.out.printf("type_contamination : venant de l'etranger \n");
-	                    System.out.printf("Date d'entrée :"+date_entree+"\n");
-	                    System.out.printf("Date de sortie :"+date_sortie+"\n");
-	          }
+	                    if(type_contamination==0)System.out.printf(ConsoleColors.BLACK_BOLD+ConsoleColors.BLACK_UNDERLINED+" type_contamination :"+ConsoleColors.RESET+" "+"un contact avec une personne malade \n");
+	                    else System.out.printf(ConsoleColors.BLACK_BOLD+ConsoleColors.BLACK_UNDERLINED+"type_contamination :"+ConsoleColors.RESET+" " +"venant de l'etranger \n");
+	                    System.out.printf(ConsoleColors.BLACK_BOLD+ConsoleColors.BLACK_UNDERLINED+"Date d'entrée :"+ConsoleColors.RESET+" "+date_entree+"\n");
+	                    System.out.printf(ConsoleColors.BLACK_BOLD+ConsoleColors.BLACK_UNDERLINED+"Date de sortie :"+ConsoleColors.RESET+" "+date_sortie+"\n");
+	                    System.out.printf(ConsoleColors.BLACK_BOLD+ConsoleColors.BLACK_UNDERLINED+"Nombre des jours restants :"+ConsoleColors.RESET+" "+this.nb_jour_restant()+"\n");
+	      }
 	       
 
 
 	/* Comparer la date de sortie par la date d'aujourd'hui calcule des jours restant*/
+	public String currentday() {
+		 	DateFormat df = new SimpleDateFormat("dd/MM/yyyy");// current day
+	        Date dateobj = new Date();
+	        String dd = df.format(dateobj);
+	        return dd ;
+	}
 	public int nb_jour_restant(){
 	    int res;
 	    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");// current day
