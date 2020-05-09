@@ -54,8 +54,58 @@ public class Test {
 		Scanner stringScanner3 = new Scanner(System.in);
 		Scanner stringScanner4 = new Scanner(System.in);
 		Scanner clavier = new Scanner(System.in) ; 
-	        switch(n) {  
-	        
+	        switch(n) { 
+	        // A propos
+	        case 1:{
+	        	 System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
+	             System.out.println(ConsoleColors.BLUE_BOLD+StringUtils.center(StringUtils.center("A Propos l'application", 120 - 2), 120, "|")+ConsoleColors.RESET);
+	             System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
+	             
+	             System.out.println(ConsoleColors.GREEN+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
+	             System.out.println(ConsoleColors.GREEN_BOLD+StringUtils.center(StringUtils.center("Présentation", 120 - 2), 120, "|")+ConsoleColors.RESET);
+	             System.out.println(ConsoleColors.GREEN+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
+	            
+	             System.out.println(StringUtils.rightPad("+", 120 - 1, "-") + "+");
+	             System.out.println(StringUtils.center(StringUtils.center("Dans le contexte actuel, l’isolement des personnes susceptibles d’être contaminées est une action clé\r\n" + 
+	             		"dans la stratégie de lutte contre la propagation du coronavirus qui nous permet de limiter\r\n" + 
+	             		"considérablement la contamination et donc le nombre de victimes. Même après le confinement\r\n" + 
+	             		"général, l’isolement sera exécuté et ce jusqu’à disparition totale du virus dans le pays et dans"
+	             		+ " le monde entier \r\n.Compte tenu de l’importance de cette action,"
+	             		+ " notre application facilite la procédure de \r\n "
+	             		+ "l'organisation des centres d'isolement dans un mémes interfaces .", 120 - 2), 120, "|"));
+	             System.out.println(StringUtils.rightPad("+", 120 - 1, "-") + "+");
+	             
+	             System.out.println(ConsoleColors.GREEN+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
+	             System.out.println(ConsoleColors.GREEN_BOLD+StringUtils.center(StringUtils.center("Nos Services", 120 - 2), 120, "|")+ConsoleColors.RESET);
+	             System.out.println(ConsoleColors.GREEN+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
+	            
+	             System.out.println(StringUtils.rightPad("+", 120 - 1, "-") + "+");
+	             System.out.println(ConsoleColors.BLACK_BOLD+StringUtils.center(StringUtils.center("1- Centres ", 120 - 2),
+	            		 120, "|")+ConsoleColors.RESET);
+	             System.out.println(StringUtils.center(StringUtils.center("Ce service permet de modéliser les centres"
+	             		+ "ainsi que la gestion de leurs chambres et la gestion \r\ndes personnes dés leur acceuil à la "
+	             		+ "date de sortie avec une affichages convenable claire avec tous \r\nles différents détails et filtres"
+	             		+ "et statistique sont disponible", 120 - 2), 120, "|"));
+	             System.out.println(StringUtils.rightPad("+", 120 - 1, "-") + "+");
+	             
+	             System.out.println(StringUtils.rightPad("+", 120 - 1, "-") + "+");
+	             System.out.println(ConsoleColors.BLACK_BOLD+StringUtils.center(StringUtils.center("2- Gouvernorat ", 120 - 2),
+	            		 120, "|")+ConsoleColors.RESET);
+	             System.out.println(StringUtils.center(StringUtils.center("Chaque gouvernorat dispose "
+	             		+ "d’un ou de plusieurs centres d’isolement avec ce services vous pouvez \r\nvisualisée"
+	             		+ "les centres de chaque gouvernorat", 120 - 2), 120, "|"));
+	             System.out.println(StringUtils.rightPad("+", 120 - 1, "-") + "+");
+	             
+	             System.out.println(StringUtils.rightPad("+", 120 - 1, "-") + "+");
+	             System.out.println(ConsoleColors.BLACK_BOLD+StringUtils.center(StringUtils.center("3- Gestion Globale ", 120 - 2),
+	            		 120, "|")+ConsoleColors.RESET);
+	             System.out.println(StringUtils.center(StringUtils.center("Cette partie englobe tous les gouvernorats"
+	             		+ "vous pouvez les manipuler et avoir une vision globale sur \r\ntouts les centres de toute la pays", 120 - 2), 120, "|"));
+	             System.out.println(StringUtils.rightPad("+", 120 - 1, "-") + "+");
+	             
+	             traitement(ges);
+          		 break ;
+	        }
 	        //Centre
 	        case 2:{
 	        	 System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
@@ -873,9 +923,6 @@ public class Test {
         ges.initpersonne("/files/personneCentre1.csv",123);
         ges.initchambre("/files/chambreCentre1.csv", 123);
         
-        //ges.affiche_list_gouvernorat();
-        
-       
         Test.traitement(ges);
         
 	}//fin main
