@@ -24,7 +24,8 @@ public class Test {
         return dd ;
 	}
 	
-	public static int choix_menu() {
+	// Menu pricipale
+	public static int choix_menu_principale() {
 		Scanner clavier = new Scanner(System.in) ; 
 		int n ;
 		System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
@@ -45,10 +46,85 @@ public class Test {
         }while(n<1||n>5);
 		return n ;
 	}
-	public static void traitement(Gestion ges)
+	
+	public static int choix_menu_centre() {
+		 Scanner clavier = new Scanner(System.in) ;
+		 System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
+         System.out.println(ConsoleColors.BLUE_BOLD+StringUtils.center(StringUtils.center("Centre", 120 - 2), 120, "|")+ConsoleColors.RESET);
+         System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
+         
+         System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
+         System.out.println(ConsoleColors.BLUE_BOLD+StringUtils.center(StringUtils.center(
+         		  "1- Ajout   "
+        		+ "2- Affichage   "
+        		+ "3- Personne   "
+         		+ "4- Chambre     "
+         		+ "5- Statistique ", 120 - 2), 120, "|")+ConsoleColors.RESET);
+         System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
+         int n2;
+         do {
+         	System.out.println(ConsoleColors.RED_BOLD+"Tapez un numéro entre 1 et 6 :"+ConsoleColors.RESET);
+         	n2=clavier.nextInt();
+         }while(n2<1||n2>5);
+         return n2;
+	}
+	
+	public static int choix_menu_gouvernorat() {
+		Scanner clavier = new Scanner(System.in) ;
+		
+		int p ;
+	
+		System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
+		System.out.println(ConsoleColors.BLUE_BOLD+StringUtils.center(StringUtils.center(
+  		  "1- Gestion des centres   "
+  		+ "2- Information     "
+  		+ "3- Statistique ", 120 - 2), 120, "|")+ConsoleColors.RESET);
+		System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
+		do {
+			System.out.println(ConsoleColors.RED_BOLD+"Tapez un numéro entre 1 et 3 :"+ConsoleColors.RESET);
+			 p = clavier.nextInt();
+		}while(p<1||p>3)	;
+		return p;
+	}
+	
+	public static int choix_menu_gestion() {
+		Scanner clavier = new Scanner(System.in) ;
+		int p ;
+		System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
+		System.out.println(ConsoleColors.BLUE_BOLD+StringUtils.center(StringUtils.center(
+  		  "1- Liste des gouvernorats "
+  		+ "2- Gestion des gouvernorats    "
+  		+ "3- Statistique  ", 120 - 2), 120, "|")+ConsoleColors.RESET);
+		System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
+		do {
+			System.out.println(ConsoleColors.RED_BOLD+"Tapez un numéro entre 1 et 3 :"+ConsoleColors.RESET);
+			p = clavier.nextInt();
+		}while(p<1||p>3);
+		return p;
+	}
+	
+	public static void quit(Gestion ges , int choix) {
+		Scanner stringScanner4 = new Scanner(System.in);
+		String quit ;
+		do {
+ 			System.out.println(ConsoleColors.RED+"Entrez"+ConsoleColors.RESET+ConsoleColors.BLACK_BOLD+" q "+ConsoleColors.RESET+
+ 					ConsoleColors.RED+"si vous voulez quitter la section OU "+ConsoleColors.RESET
+ 					+ConsoleColors.BLACK_BOLD+" r "+ConsoleColors.RESET+ConsoleColors.RED+" si vous voulez restez"+ConsoleColors.RESET);
+ 			quit = stringScanner4.next();
+ 		}while(!quit.equals("q") && !quit.equals("r"));
+ 		if(quit.equals("q"))
+     		prog_principale(ges,0);
+ 		if(quit.equals("r"))
+ 			prog_principale(ges,choix);
+	}
+	
+	public static void prog_principale(Gestion ges,int choix)
 	{
 		int n ;
-		n = choix_menu();
+		if(choix==0)
+			n = choix_menu_principale();
+		else
+			n=  choix;
 		Scanner stringScanner = new Scanner(System.in);
 		Scanner stringScanner2 = new Scanner(System.in);
 		Scanner stringScanner3 = new Scanner(System.in);
@@ -103,28 +179,13 @@ public class Test {
 	             		+ "vous pouvez les manipuler et avoir une vision globale sur \r\ntouts les centres de toute la pays", 120 - 2), 120, "|"));
 	             System.out.println(StringUtils.rightPad("+", 120 - 1, "-") + "+");
 	             
-	             traitement(ges);
+	             prog_principale(ges,0);
           		 break ;
 	        }
 	        //Centre
 	        case 2:{
-	        	 System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
-	             System.out.println(ConsoleColors.BLUE_BOLD+StringUtils.center(StringUtils.center("Centre", 120 - 2), 120, "|")+ConsoleColors.RESET);
-	             System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
-	             
-	             System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
-	             System.out.println(ConsoleColors.BLUE_BOLD+StringUtils.center(StringUtils.center(
-	             		  "1- Ajout   "
-	            		+ "2- Affichage   "
-	            		+ "3- Personne   "
-	             		+ "4- Chambre     "
-	             		+ "5- Statistique ", 120 - 2), 120, "|")+ConsoleColors.RESET);
-	             System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
-	             int n2;
-	             do {
-	             	System.out.println(ConsoleColors.RED_BOLD+"Tapez un numéro entre 1 et 6 :"+ConsoleColors.RESET);
-	             	n2=clavier.nextInt();
-	             }while(n2<1||n2>5);
+	        	 String quit;
+	        	 int n2 = choix_menu_centre();
 	             switch(n2) {
 	             	// Ajout
 	             	case 1 :{	             		
@@ -150,8 +211,9 @@ public class Test {
 	             		if(go!=null) {
 	             			go.ajouter_centre(c);
 	             			System.out.println("Le "+c+ConsoleColors.GREEN+" Ajoutée avec succées"+ConsoleColors.RESET);                		
-	             		}      	             		
-	             		traitement(ges);
+	             		}
+	             		// Quit Section
+	             		quit(ges,2);
 	             		break ;
 	             	}
 	             	// Affichage
@@ -193,8 +255,10 @@ public class Test {
 	        	             		int x = c.getCapacite()-c.getNombre_personnes();
 	        	             		System.out.println(ConsoleColors.BLACK_BOLD+ConsoleColors.BLACK_UNDERLINED+"Nombres des places disponible :"+ConsoleColors.RESET+
 	        	             				" "+x);
-	        	             		traitement(ges);
+	        	             		// Quit Section
+	        	             		quit(ges,2);
 	        	             		break ;
+	        	             		
 	        	             // Liste Chambres
 	        	             	case 2 :
 	        	             		System.out.println(ConsoleColors.GREEN+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
@@ -205,8 +269,9 @@ public class Test {
 	        	             		Listc =c.getList_chambres();
 	    	        				String[][] tab1 = tableConsole.changeformat_chambre(Listc);
 	    	        				tableConsole.tableWithLinesAndMaxWidth(tab1);
-	        	             		traitement(ges);
-	        	             		break ;
+	    	        				// Quit Section
+	    		             		quit(ges,2);
+	    		             		break ;
 	        	            // liste personnes
 	        	             	case 3 :
 	        	             		System.out.println(ConsoleColors.GREEN+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
@@ -217,11 +282,12 @@ public class Test {
 	        	             		Listp =c.getList_personnes();
 	    	        				String[][] tab2 = tableConsole.changeformat_personne(Listp);
 	    	        				tableConsole.tableWithLinesAndMaxWidth(tab2);
-	        	             		traitement(ges);
-	        	             		break ;
+	    	        				// Quit Section
+	    		             		quit(ges,2);
+	    		             		break ;
 	        	             }
 	             		}
-	             		traitement(ges);
+	             		prog_principale(ges,0);
 	             		break ;
 	             	}
 	             	// Personne
@@ -272,7 +338,8 @@ public class Test {
 			        	             		Listp =c.getList_personnes();
 			    	        				String[][] tab2 = tableConsole.changeformat_personne(Listp);
 			    	        				tableConsole.tableWithLinesAndMaxWidth(tab2);
-			        	             		traitement(ges);
+			    	        				// Quit Section
+			    		             		quit(ges,2);
 			        	             		break ;
 		   	        	            	}
 		   	        	            	case 2 :{
@@ -284,7 +351,9 @@ public class Test {
 			        	             		ArrayList<Personne> list = c.list_personnes_sortes();
 			        	             		String[][] table = tableConsole.changeformat_personne(list);
 			        	             		tableConsole.tableWithLinesAndMaxWidth(table);
-			        	             		
+			        	             		// Quit Section
+			        	             		quit(ges,2);
+			        	             		break;
 		   	        	            	}
 		   	        	            	case 3 :{
 		   	        	            		// Liste personne malades
@@ -295,6 +364,9 @@ public class Test {
 			        	             		ArrayList<Personne> list = c. list_personne_selon_etat(2);
 			        	             		String[][] table = tableConsole.changeformat_personne(list);
 			        	             		tableConsole.tableWithLinesAndMaxWidth(table);
+			        	             		// Quit Section
+			        	             		quit(ges,2);
+			        	             		break;
 		   	        	            	}
 		   	        	            	case 4 :{
 		   	        	            		// Liste personne Contaminées
@@ -305,6 +377,9 @@ public class Test {
 			        	             		ArrayList<Personne> list = c. list_personne_selon_etat(1);
 			        	             		String[][] table = tableConsole.changeformat_personne(list);
 			        	             		tableConsole.tableWithLinesAndMaxWidth(table);
+			        	             		// Quit Section
+			        	             		quit(ges,2);
+			        	             		break;
 		   	        	            	}
 		   	        	            	case 5 :{
 		   	        	            		// Liste personne n’a eu aucun symptôme
@@ -315,10 +390,14 @@ public class Test {
 			        	             		ArrayList<Personne> list = c.list_personne_selon_etat(3);
 			        	             		String[][] table = tableConsole.changeformat_personne(list);
 			        	             		tableConsole.tableWithLinesAndMaxWidth(table);
+			        	             		// Quit Section
+			        	             		quit(ges,2);
+			        	             		break;
 		   	        	            	}
 		   	        	            }
-	        	             		traitement(ges);
-	        	             		break ;
+		   	        	            // Quit Section
+	        	             		quit(ges,2);
+	        	             		break;
 	        	             	}
 	        	             	// Affiche personne
 	        	             	case 2 :{
@@ -339,8 +418,9 @@ public class Test {
 		        	             		System.out.println(ConsoleColors.GREEN+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
 		        	             		p.affiche();
 	        	             		}
-		        	             	traitement(ges);
-	        	             		break ;
+	        	             		// Quit Section
+	        	             		quit(ges,2);
+	        	             		break;
 	        	             	}
 	        	             	// Ajout
 	        	             	case 3 :{
@@ -469,21 +549,24 @@ public class Test {
 	        	             			System.out.println(ConsoleColors.GREEN+"Personne "+p.getNum_cin()+" affectée avec succée au chambre"
 	        	             					+ "num "+numch+ConsoleColors.RESET);
 	        	             		}
-	        	             		traitement(ges);
-	        	             		break ;
+	        	             		// Quit Section
+	        	             		quit(ges,2);
+	        	             		break;
 	        	             	}
 	        	             	// Enregistrement de départ
 	        	             	case 4 :{
 	        	             		System.out.println(ConsoleColors.GREEN+"Donnez lu num de cin du personne :"+ConsoleColors.RESET);
 	        	             		int cin = clavier.nextInt();
 	        	             		c.supprime_personne(cin);
-	        	             		traitement(ges);
-	        	             		break ;
+	        	             		// Quit Section
+	        	             		quit(ges,2);
+	        	             		break;
 	        	             	}
 	        	             }
 	        	        }
-	             		traitement(ges);
-	             		break ;
+	             		// Quit Section
+	             		quit(ges,2);
+	             		break;
 	             	}
 	             	// Chambre
 	             	case 4:{
@@ -532,8 +615,9 @@ public class Test {
 			        	             		Listc =c.getList_chambres();
 			    	        				String[][] tab2 = tableConsole.changeformat_chambre(Listc);
 			    	        				tableConsole.tableWithLinesAndMaxWidth(tab2);
-			        	             		traitement(ges);
-			        	             		break ;
+			    	        				// Quit Section
+			        	             		quit(ges,2);
+			        	             		break;
 			   	        	            }
 			   	        	         	case 2:{
 		   	        	            		System.out.println(ConsoleColors.GREEN+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
@@ -543,8 +627,9 @@ public class Test {
 			        	             		Listc =c.list_chambre_libre_desinfecter();
 			    	        				String[][] tab2 = tableConsole.changeformat_chambre(Listc);
 			    	        				tableConsole.tableWithLinesAndMaxWidth(tab2);
-			        	             		traitement(ges);
-			        	             		break ;
+			    	        				// Quit Section
+			        	             		quit(ges,2);
+			        	             		break;
 			   	        	            }
 			   	        	         	case 3:{
 		   	        	            		System.out.println(ConsoleColors.GREEN+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
@@ -554,8 +639,9 @@ public class Test {
 			        	             		Listc =c.list_chambre_occupees();
 			    	        				String[][] tab2 = tableConsole.changeformat_chambre(Listc);
 			    	        				tableConsole.tableWithLinesAndMaxWidth(tab2);
-			        	             		traitement(ges);
-			        	             		break ;
+			    	        				// Quit Section
+			        	             		quit(ges,2);
+			        	             		break;
 			   	        	            }
 			   	        	         	case 4:{
 		   	        	            		System.out.println(ConsoleColors.GREEN+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
@@ -565,12 +651,14 @@ public class Test {
 			        	             		Listc =c.list_chambre_libre_infecter();
 			    	        				String[][] tab2 = tableConsole.changeformat_chambre(Listc);
 			    	        				tableConsole.tableWithLinesAndMaxWidth(tab2);
-			        	             		traitement(ges);
-			        	             		break ;
+			    	        				// Quit Section
+			        	             		quit(ges,2);
+			        	             		break;
 			   	        	            }
 		        	             	}
-		   	        	            traitement(ges);
-	        	             		break ;
+		   	        	            // Quit Section
+	        	             		quit(ges,2);
+	        	             		break;
 	        	             	}
 	        	             	// Affiche Chambre
 	        	             	case 2 :{
@@ -584,8 +672,9 @@ public class Test {
 	        	             			Chambre ch = c.getChambre(numc);
 	        	             			System.out.println(ch);
 	        	             		}
-	        	             		traitement(ges);
-	        	             		break ;
+	        	             		// Quit Section
+	        	             		quit(ges,2);
+	        	             		break;
 	        	             	}
 	        	             	// Nettoyer Chambre
 	        	             	case 3 :{
@@ -599,8 +688,9 @@ public class Test {
 	        	             			Chambre ch = c.getChambre(numc);
 	        	             			ch.Nettoyer_chambre();
 	        	             		}
-	        	             		traitement(ges);
-	        	             		break ;
+	        	             		// Quit Section
+	        	             		quit(ges,2);
+	        	             		break;
 	        	             	}
 	        	             	//Affecter Chambre
 	        	             	case 4:{
@@ -622,8 +712,9 @@ public class Test {
 		        	             		}
 	        	             		}
 	        	             		
-	        	             		traitement(ges);
-	        	             		break ;
+	        	             		// Quit Section
+	        	             		quit(ges,2);
+	        	             		break;
 	        	             	}
 	        	             	case 5:{
 	        	             		System.out.println(ConsoleColors.GREEN+"Donnez le num de chambre "+ConsoleColors.RESET);        		             		
@@ -636,13 +727,15 @@ public class Test {
 	        	             			Chambre ch = c.getChambre(numc);
 	        	             			ch.libérer_chambre();
 	        	             		}
-	        	             		traitement(ges);
-	        	             		break ;
+	        	             		// Quit Section
+	        	             		quit(ges,2);
+	        	             		break;
 	        	             	}
 	        	             }
 	             		}   
-	             		traitement(ges);
-	             		break ;
+	             		// Quit Section
+	             		quit(ges,2);
+	             		break;
 	             	}
 	             	//Statistique
 	             	case 5:{
@@ -675,8 +768,9 @@ public class Test {
 		        	            	System.out.println(ConsoleColors.GREEN+"Nombre des personnes n'ont aucun symptome "+
 		        	            			ConsoleColors.RESET+ConsoleColors.BLACK_BOLD+c.list_personne_selon_etat(3).size()
 		        	            			+ConsoleColors.RESET);
-		        	            	traitement(ges);
-		     	             		break ; 
+		        	            	// Quit Section
+	        	             		quit(ges,2);
+	        	             		break; 
 		        	             }
 		        	             case 1:{
 		        	            	 System.out.println(ConsoleColors.RED+"Nombre des chambres libres désinfectée "+
@@ -688,36 +782,33 @@ public class Test {
 			        	            	System.out.println(ConsoleColors.GREEN+"Nombre des chambres disponible "+
 			        	            			ConsoleColors.RESET+ConsoleColors.BLACK_BOLD+c.nombre_chambre_libre_desinfecter()
 			        	            			+ConsoleColors.RESET);
-		        	            	traitement(ges);
-		     	             		break ;
+			        	            	// Quit Section
+		        	             		quit(ges,2);
+		        	             		break;
 		        	             }
 	        	             }
 	             		}
-	             		traitement(ges);
-	             		break ;
+	             		// Quit Section
+	             		quit(ges,2);
+	             		break;
 	             	}
 	             }
-	             ;break;
+	             // Quit Section
+          		quit(ges,2);
+          		break;
 	        }        
 	        //gouvernorat 
 	        case 3 :     	
 	        	{	
-	        		System.out.println(ConsoleColors.GREEN+"Donnez le nom du gouvernorat "+ConsoleColors.RESET);
-					String ch ;
-					do {
-             			ch= stringScanner.nextLine();
-             		}while(!ges.gouvernorat_existev2(ch));
-	        		Gouvernorat gouv=ges.get_Gouvernorat(ch);// Get gouvernorat
-	        		
-	        		System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
-	        		System.out.println(ConsoleColors.BLUE_BOLD+StringUtils.center(StringUtils.center(
-	          		  "1- Gestion des centres   "
-	          		+ "2- Information     "
-	          		+ "3- Statistique ", 120 - 2), 120, "|")+ConsoleColors.RESET);
-	        		System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
-	          
-	        		int p = clavier.nextInt();
-	        	
+	        		String quit;
+		        	int p = choix_menu_gouvernorat();
+		        	System.out.println(ConsoleColors.GREEN+"Donnez le nom du gouvernorat "+ConsoleColors.RESET);
+		    		String ch ;
+		    		do {
+		     			ch= stringScanner.nextLine();
+		     		}while(!ges.gouvernorat_existev2(ch));
+		    		Gouvernorat gouv=ges.get_Gouvernorat(ch);// Get gouvernorat
+		    		
 	        		switch (p) {
 	        		//Gestion des centres
 	        		case 1 :
@@ -754,7 +845,8 @@ public class Test {
 			             		gouv.ajouter_centre(c);
 			             		System.out.println("Le "+c+ConsoleColors.GREEN+" Ajoutée avec succées"+ConsoleColors.RESET);                		
 			             		      	             		
-			             		traitement(ges);
+			             		// Quit Section
+        	             		quit(ges,3);
 			             		break ;
 		            		}
 			            	// Supprimer centre
@@ -765,11 +857,12 @@ public class Test {
 									Centre C = gouv.get_centre(num);
 									gouv.supprimer_centre(C);
 									System.out.println(ConsoleColors.GREEN+"Centre Supprimée avec succée");
-									traitement(ges);
-				             		break ;
+		     	             		
+				             		// Quit Section
+	        	             		quit(ges,3);
 							}
 	            		}
-	            		traitement(ges);
+	            		prog_principale(ges,0);
 	             		break ;
 	        		}
 	        		// Information
@@ -784,33 +877,29 @@ public class Test {
 	        				L =gouv.get_list_Centres();
 	        				String[][] m = tableConsole.changeformat_centre(L);
 	        				tableConsole.tableWithLinesAndMaxWidth(m);
-	        				traitement(ges);
-		             		break ;
+     	             		// Quit Section
+        	             	quit(ges,3);
 	        		}
-	        		// S
+	        		// Statistique
 	        		case 3 :
 	        			{
 	        				float pourcentage = ges.pourcentage_contamination_gouv(ch);
 		        			System.out.println(ConsoleColors.RED+"le poucentage de contamination est du "+
 	        				gouv.get_nom()+" est " + pourcentage + "%"+ConsoleColors.RESET);
-		        			traitement(ges);
+     	             		// Quit Section
+        	             	quit(ges,3);
 		             		break ;
 	        			}
 	        		}
-	        	traitement(ges);
+	            // Quit Section
+	            quit(ges,3);
 	        	break ;
 	        }        		
 	        //gestion         	
 	        case 4 :
 	        {	
-	        	System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
-	    		System.out.println(ConsoleColors.BLUE_BOLD+StringUtils.center(StringUtils.center(
-	      		  "1- Liste des gouvernorats "
-	      		+ "2- Gestion des gouvernorats    "
-	      		+ "3- Statistique  ", 120 - 2), 120, "|")+ConsoleColors.RESET);
-	    		System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
-	    		int p = clavier.nextInt();
-	        	
+	        	String quit;
+	        	int p = choix_menu_gestion();
 	    		switch (p) {
 	    		// Liste des gouvernorats
 	    		case 1 :
@@ -823,7 +912,8 @@ public class Test {
 					L =ges.get_list_Gouvernorats();
 					String[][] m = tableConsole.changeformat_gouvernorat(L);
 					tableConsole.tableWithLinesAndMaxWidth(m);
-					traitement(ges);
+					// Quit Section
+		            quit(ges,4);
 					break ;
 	    			
 	    		}
@@ -855,7 +945,8 @@ public class Test {
 		        				System.out.println(ConsoleColors.RED+"Vous ne pouvez pas ajoutées d'autre gouvernorat"
 		        						+ " il existe déja 24 gouvernorats ");
 		        			}
-							traitement(ges);
+		        			// Quit Section
+				            quit(ges,4);
 							break ;
 						}
 		        		//Supprimer gouvernorat
@@ -870,7 +961,8 @@ public class Test {
 							ges.Supprimer_gouvernorat(gouv);
 							System.out.println(ConsoleColors.GREEN+"Gouvernorat "+gouv.get_nom()+" supprimée avec succée "+
 							ConsoleColors.RESET);
-							traitement(ges);
+							// Quit Section
+				            quit(ges,4);
 							break ;
 						}
 	        		}
@@ -882,11 +974,14 @@ public class Test {
 	    			float pourcentage = ges.pourcentage_contamination() ;
 	    			System.out.println(ConsoleColors.GREEN+"le nomre totale de personnes acceillies est "+ConsoleColors.RESET+ConsoleColors.BLACK_BOLD +nombre+ConsoleColors.RESET); 
 	    			System.out.println(ConsoleColors.RED+"le poucentage de contamination est " +ConsoleColors.RESET+ConsoleColors.BLACK_BOLD +  pourcentage + "% "+ConsoleColors.RESET); 
-	    			traitement(ges);
+	    			// Quit Section
+		            quit(ges,4);
 	    			break ;
 	    		}
 	    		     
 	    	}
+	    		quit(ges,4);
+    			break ;
 	    	}
 	        
 	     }//fin switch
@@ -923,7 +1018,7 @@ public class Test {
         ges.initpersonne("/files/personneCentre1.csv",123);
         ges.initchambre("/files/chambreCentre1.csv", 123);
         
-        Test.traitement(ges);
+        Test.prog_principale(ges,0);
         
 	}//fin main
 }// fin classe
