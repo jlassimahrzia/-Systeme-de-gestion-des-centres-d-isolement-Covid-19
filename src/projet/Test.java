@@ -460,7 +460,7 @@ public class Test {
 	        	             		int etat ;
 	        	             		do {
 	        	             			etat = stringScanner4.nextInt();
-	        	             		}while(type!=2 && type!=3);
+	        	             		}while(etat!=2 && etat!=3);
 	        	             		System.out.println("Gouvernorat :"); 
 	        	             		String gouvernorat ;
 	        	             		do {
@@ -468,6 +468,7 @@ public class Test {
 	        	             		}while(!ges.gouvernorat_existev2(gouvernorat));
 	        	             		
 	        	             		Personne p = new Personne(numcin,nom,prenom,genre.charAt(0),date,gouvernorat,type,etat);
+	        	             		
 	        	             		// 2- Si il y'a une place disponible dans le centre si non on cherche le centre le plus proche
 	        	             		if(c.getCapacite()<=c.nombre_chambre_libre_desinfecter()) {
 	        	             			System.out.println(ConsoleColors.BLACK_BOLD+ConsoleColors.RED_BACKGROUND+
@@ -806,10 +807,19 @@ public class Test {
 	    		do {
 	     			ch= stringScanner.nextLine();
 	     		}while(!ges.gouvernorat_existev2(ch));
-	    		System.out.println(ConsoleColors.GREEN+"Donnez le nombre des personnes à ajoutées :"+ConsoleColors.RESET);
-	    		int nb = clavier.nextInt() ;
-	    		ges.ajouter_personne_selon_gouvernorat(ch,nb);
-				
+	    		int nb ;
+	    		do {
+	    			System.out.println(ConsoleColors.GREEN+"Donnez le nombre des personnes à ajoutées :"+ConsoleColors.RESET);
+		    		nb = clavier.nextInt() ;
+	    		}while(nb<=0);
+	    		ArrayList<Centre> listeCentreDispo = new ArrayList<Centre>();
+	    		try {
+	    			listeCentreDispo = ges.affectation_proposée(ch,nb);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	    		ges.ajoutpersonne(listeCentreDispo, nb,ch);
 	        	// Quit Section
           		quit(ges,3);
           		break;
@@ -1036,9 +1046,13 @@ public class Test {
         Gestion ges = new Gestion(); //C'est notre systéme 
         ges.init_gouvernorat(); // tous les gouvernorat sont ajoutées au systéme
         ges.init_centre(); // initialisation des centres
-        ges.initpersonne("/files/personneCentre1.csv",124);
-        ges.initchambre("/files/chambreCentre1.csv", 124);
-        
+        //init personne
+        ges.initpersonne("/files/personneCentre1.csv",123);
+        ges.initpersonne("/files/personneCentre3.csv",125);
+        //init chambre
+        ges.initchambre("/files/chambreCentre1.csv", 123);
+        ges.initchambre("/files/chambreCentre2.csv", 124);
+        ges.initchambre("/files/chambreCentre3.csv", 125);
         Test.prog_principale(ges,0);
         
 	}//fin main

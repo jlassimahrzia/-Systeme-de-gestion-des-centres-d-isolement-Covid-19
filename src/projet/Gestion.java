@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class Gestion {
 	
@@ -106,7 +109,7 @@ public class Gestion {
                 if(this.cente_existe(numcentre)) {
                 	Centre c = this.get_cente(numcentre);               
 	                if(c.getCapacite()<=c.getList_chambres().size()) {
-	        			System.out.println("Centre Complet");
+	        			//System.out.println("Centre Complet");
 	        		}
 	                else {
 	                	if(Integer.parseInt(chambre[3])==0) {
@@ -189,29 +192,28 @@ public class Gestion {
         }
 	}
 	
-	public void ajouter_personne_selon_gouvernorat(String nom,int nb) {
+	
+	// Debut Ajout Selon Gouvernorat
+	public ArrayList <Centre> affectation_proposée(String nom,int nb) throws IOException {
+		// Remplissage de la liste
         Gouvernorat g=this.get_Gouvernorat(nom);
         ArrayList <Centre> listecentreDispo = new ArrayList<Centre>();
-        String[][] table = new String[nb][3] ;
-		table[0][0] = "Numéro Ref" ; table[0][1] = "Gouvernorat" ; table[0][2] ="Nombres Des Personne" ;
-		
+        int[] tab = new int[nb];int j=0;
         //Liste centre disponible Dans 
         int b=0; // variable d'incrémentation jusqu'a le nombre demander atteint
-        int nbrcentre=1 ;
+       
         ArrayList <Centre>  listecentre =g.get_list_Centres();
         for(Centre c:  listecentre ){
             if((c.getCapacite()>c.nombre_chambre_libre_desinfecter())&&(b<nb)){
             	listecentreDispo.add(c) ;
-            	table[nbrcentre][0]=Integer.toString(c.getNumero_ref());
-        		table[nbrcentre][1]=g.get_nom();
             	if(b<=c.nombre_chambre_libre_desinfecter()) {
             		b+=c.nombre_chambre_libre_desinfecter();
-            		table[nbrcentre][2]=Integer.toString(c.nombre_chambre_libre_desinfecter());
-            		nbrcentre++;
+            		tab[j]=c.nombre_chambre_libre_desinfecter();
+            		j++;
             	}
             	else {
-            		table[nbrcentre][2]=Integer.toString(nb-b);
-            		nbrcentre++;
+            		tab[j]=nb-b;
+            		j++;
             		b+=nb-b;
             	}
              }
@@ -226,15 +228,13 @@ public class Gestion {
               for(Centre c:  lc ){
                   if((c.getCapacite()>c.nombre_chambre_libre_desinfecter())&&(b<nb)){
                 	  listecentreDispo.add(c) ;
-                	  table[nbrcentre][0]=Integer.toString(c.getNumero_ref());
-              			table[nbrcentre][1]=g1.get_nom();
                 	  if(b<=c.nombre_chambre_libre_desinfecter()) {
-                  		b+=c.nombre_chambre_libre_desinfecter();
-                  		table[nbrcentre][2]=Integer.toString(c.nombre_chambre_libre_desinfecter());
-                  		nbrcentre++;
+                		b+=c.nombre_chambre_libre_desinfecter();
+                  		tab[j]=c.nombre_chambre_libre_desinfecter();
+                  		j++;
                 	  }else {
-                		table[nbrcentre][2]=Integer.toString(nb-b);
-                		nbrcentre++;
+                		tab[j]=nb-b;
+                  		j++;
                   		b+=nb-b;	
                   	  }
                   }
@@ -242,9 +242,97 @@ public class Gestion {
               i++; 
           }
        }
-        tableConsole.tableWithLinesAndMaxWidth(table);
+        // Affichage de la liste 
+        System.out.println(ConsoleColors.GREEN+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
+ 		System.out.println(ConsoleColors.GREEN_BOLD+StringUtils.center("**********"+" Affectation Proposée "
+ 				+" **********"+ConsoleColors.RESET, 120 - 2));
+ 		System.out.println(ConsoleColors.GREEN+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
+ 		String[][] table = new String[listecentreDispo.size()+1][3] ;
+		table[0][0] = "Numéro Ref" ; table[0][1] = "Gouvernorat" ; table[0][2] ="Nombres Des Personne" ;
+		int nbrcentre = 1;
+		for(Centre c :listecentreDispo) {
+			table[nbrcentre][0]=Integer.toString(c.getNumero_ref());
+			table[nbrcentre][1]=c.getGouvernorat();
+			table[nbrcentre][2]=Integer.toString(tab[nbrcentre-1]);
+			nbrcentre++;
+		}
+ 		tableConsole.tableWithLinesAndMaxWidth(table);
+ 		// retourner la liste 
+ 		return listecentreDispo ;
 }
 
+	public void entrezpersonne(Centre c,String gouv) {
+		Scanner stringScanner = new Scanner(System.in);
+		Scanner stringScanner2 = new Scanner(System.in);
+		Scanner stringScanner3 = new Scanner(System.in);
+		Scanner stringScanner4 = new Scanner(System.in);
+		Scanner clavier = new Scanner(System.in) ; 
+		
+		// 1- Entrez les données du personne à ajoutée
+ 		System.out.println("Num de cin : ");
+ 		int numcin;
+ 		do {
+ 			numcin = clavier.nextInt() ;
+ 		}while(c.personne_estPresentv2(numcin));
+ 		System.out.println("Nom : ");
+ 		String nom = stringScanner.nextLine();
+ 		System.out.println("Prénom : ");
+ 		String prenom = stringScanner2.nextLine();
+ 		System.out.println("Genre :");
+ 		String genre ;
+ 		do {
+ 			System.out.println(ConsoleColors.RED+"Entrez F ou M"+ConsoleColors.RESET);
+ 			genre = stringScanner.next();
+ 		}while(!genre.equals("F") && !genre.equals("M"));
+ 		System.out.println("Date de naissance : ");
+ 		String date ;
+ 		do {
+ 			System.out.println(ConsoleColors.RED+"Date sous forme jj/mm/aaaa"+ConsoleColors.RESET);
+ 			date = stringScanner2.nextLine() ;
+ 		}while(!Test.isDate(date));
+ 		System.out.println("type_contamination :");
+ 		System.out.println("Entrez "+ConsoleColors.BLACK_BOLD+" 0 "+ConsoleColors.RESET+" si un contact avec une personne malade");
+ 		System.out.println("Entrez "+ConsoleColors.BLACK_BOLD+" 1 "+ConsoleColors.RESET+" si venant de l'etranger");
+ 		int type ;
+ 		do {
+ 			type = stringScanner.nextInt();
+ 		}while(type!=0 && type!=1);
+ 		System.out.println("Etat :");
+ 		System.out.println("Entrez "+ConsoleColors.BLACK_BOLD+" 2 "+ConsoleColors.RESET+" si personne malade mais sans symptômes graves");
+ 		System.out.println("Entrez "+ConsoleColors.BLACK_BOLD+" 3 "+ConsoleColors.RESET+" si personne n’a eu aucun symptôme");
+ 		int etat ;
+ 		do {
+ 			etat = clavier.nextInt();
+ 		}while(etat!=2 && etat!=3);
+ 		
+ 		Personne p = new Personne(numcin,nom,prenom,genre.charAt(0),date,gouv,type,etat);
+ 		c.ajouter_personne(p);
+ 		// Si ajouter c bn il faut l'affectée à une chambre
+ 		System.out.println(ConsoleColors.BLUE+"Liste des chambre disponibles "+ConsoleColors.RESET);
+			ArrayList<Chambre> listcld = c.list_chambre_libre_desinfecter();
+			String[][] table = tableConsole.changeformat_chambre(listcld);
+			tableConsole.tableWithLinesAndMaxWidth(table);
+			System.out.println(ConsoleColors.GREEN+"Entrez le num de chambre :"+ConsoleColors.RESET);
+			int numch ;
+			do {
+				numch = clavier.nextInt();
+			}while(!c.affecter_chambre(numch, p.getNum_cin()));
+			System.out.println(ConsoleColors.GREEN+"Personne "+p.getNum_cin()+" affectée avec succée au chambre"
+					+ "num "+numch+ConsoleColors.RESET);
+	}
+	public void ajoutpersonne(ArrayList <Centre> list ,int nb,String gouv) {
+		int b =0;
+		for(Centre c:  list ){
+		while((c.getCapacite()>c.nombre_chambre_libre_desinfecter())&&(b<nb)) {
+            System.out.println(ConsoleColors.BLUE+"Entrez les données de personne num "+(b+1)
+            			+ConsoleColors.RESET);
+            	this.entrezpersonne(c, gouv);
+     			// c bn
+     			b++;
+			}
+        }               
+	}
+	// Fin Ajout Selon Gouvernorat
 	
 	public boolean gouvernorat_existe(String ch)
 	{

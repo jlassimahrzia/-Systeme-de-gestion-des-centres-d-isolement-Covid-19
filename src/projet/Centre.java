@@ -90,8 +90,8 @@ public class Centre {
 	}
 	
 	public void ajouter_personne (Personne p) {
-		if(this.capacite<=this.nombre_personnes) {
-			System.out.println("Centre Complet");
+		if(this.capacite<=this.nombre_chambre_libre_desinfecter()) {
+			//System.out.println("Centre Complet");
 		}
 		else {
 			this.list_personnes.add(p);
