@@ -189,6 +189,62 @@ public class Gestion {
         }
 	}
 	
+	public void ajouter_personne_selon_gouvernorat(String nom,int nb) {
+        Gouvernorat g=this.get_Gouvernorat(nom);
+        ArrayList <Centre> listecentreDispo = new ArrayList<Centre>();
+        String[][] table = new String[nb][3] ;
+		table[0][0] = "Numéro Ref" ; table[0][1] = "Gouvernorat" ; table[0][2] ="Nombres Des Personne" ;
+		
+        //Liste centre disponible Dans 
+        int b=0; // variable d'incrémentation jusqu'a le nombre demander atteint
+        int nbrcentre=1 ;
+        ArrayList <Centre>  listecentre =g.get_list_Centres();
+        for(Centre c:  listecentre ){
+            if((c.getCapacite()>c.nombre_chambre_libre_desinfecter())&&(b<nb)){
+            	listecentreDispo.add(c) ;
+            	table[nbrcentre][0]=Integer.toString(c.getNumero_ref());
+        		table[nbrcentre][1]=g.get_nom();
+            	if(b<=c.nombre_chambre_libre_desinfecter()) {
+            		b+=c.nombre_chambre_libre_desinfecter();
+            		table[nbrcentre][2]=Integer.toString(c.nombre_chambre_libre_desinfecter());
+            		nbrcentre++;
+            	}
+            	else {
+            		table[nbrcentre][2]=Integer.toString(nb-b);
+            		nbrcentre++;
+            		b+=nb-b;
+            	}
+             }
+        }               
+        if(b<nb){
+          String[] t = g.Distance();
+          int i=1;
+          while(b<nb){
+              Gouvernorat g1=this.get_Gouvernorat(t[i]);
+              ArrayList <Centre>  lc=g1.get_list_Centres();
+                       
+              for(Centre c:  lc ){
+                  if((c.getCapacite()>c.nombre_chambre_libre_desinfecter())&&(b<nb)){
+                	  listecentreDispo.add(c) ;
+                	  table[nbrcentre][0]=Integer.toString(c.getNumero_ref());
+              			table[nbrcentre][1]=g1.get_nom();
+                	  if(b<=c.nombre_chambre_libre_desinfecter()) {
+                  		b+=c.nombre_chambre_libre_desinfecter();
+                  		table[nbrcentre][2]=Integer.toString(c.nombre_chambre_libre_desinfecter());
+                  		nbrcentre++;
+                	  }else {
+                		table[nbrcentre][2]=Integer.toString(nb-b);
+                		nbrcentre++;
+                  		b+=nb-b;	
+                  	  }
+                  }
+              }
+              i++; 
+          }
+       }
+        tableConsole.tableWithLinesAndMaxWidth(table);
+}
+
 	
 	public boolean gouvernorat_existe(String ch)
 	{

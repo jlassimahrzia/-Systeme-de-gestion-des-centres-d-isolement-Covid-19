@@ -98,45 +98,7 @@ public class Centre {
 			this.nombre_personnes++;
 		}
 	}
-	public void ajouter_personnev2(Personne p) throws IOException {
-		if(this.capacite<=this.nombre_personnes) {			
-			System.out.println("Centre Complet");
-            Gouvernorat g=new Gouvernorat(gouvernorat);
-            ArrayList <Centre>  listecentre;
-            listecentre=g.get_list_Centres();
-            int b=0;           
-            for(Centre c:  listecentre ){
-                if((c.capacite>c.nombre_personnes)&&(b==0)){
-	                c.list_personnes.add(p);
-				    c.nombre_personnes++;  
-                    b=1;
-                 }
-            }               
-            if(b==0){
-              String[] t= g.Distance();
-              int i=1;
-              while(b==0){
-              Gouvernorat g1=new Gouvernorat(t[i]);
-              ArrayList <Centre>  lc;
-              lc=g.get_list_Centres();
-                       
-              for(Centre c:  listecentre ){
-                  if((c.capacite>c.nombre_personnes)&&(b==0)){
-                    c.list_personnes.add(p);
-			        c.nombre_personnes++;  
-                    b=1;
-                  }
-              }
-              i++; 
-            }
-           }
-		}
-		else {
-			this.list_personnes.add(p);
-			this.nombre_personnes++;
-		}
-	}
-
+	
 
 	// Vérifier l'existance de personne dans la centre
 	public boolean personne_estPresent(int cin) {

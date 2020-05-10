@@ -36,8 +36,9 @@ public class Test {
 	    System.out.println(ConsoleColors.BLUE_BOLD+StringUtils.center(StringUtils.center(
 	        		  "1- A propos   "
 	        		+ "2- Centre     "
-	        		+ "3- Gouvernorat     "
-	        		+ "4- Gestion totale ", 120 - 2), 120, "|")+ConsoleColors.RESET);
+	        		+ "3- Personne   "
+	        		+ "4- Gouvernorat     "
+	        		+ "5- Gestion totale ", 120 - 2), 120, "|")+ConsoleColors.RESET);
 	    System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
 	        
 		do {
@@ -63,7 +64,7 @@ public class Test {
          System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
          int n2;
          do {
-         	System.out.println(ConsoleColors.RED_BOLD+"Tapez un numéro entre 1 et 6 :"+ConsoleColors.RESET);
+         	System.out.println(ConsoleColors.RED_BOLD+"Tapez un numéro entre 1 et 5 :"+ConsoleColors.RESET);
          	n2=clavier.nextInt();
          }while(n2<1||n2>5);
          return n2;
@@ -796,9 +797,25 @@ public class Test {
 	             // Quit Section
           		quit(ges,2);
           		break;
-	        }        
+	        }   
+	        // Ajout personne selon gouvernorat
+	        case 3 :{
+	        	String quit;
+	        	System.out.println(ConsoleColors.GREEN+"Donnez le nom du gouvernorat des personnes à ajoutées :"+ConsoleColors.RESET);
+	    		String ch ;
+	    		do {
+	     			ch= stringScanner.nextLine();
+	     		}while(!ges.gouvernorat_existev2(ch));
+	    		System.out.println(ConsoleColors.GREEN+"Donnez le nombre des personnes à ajoutées :"+ConsoleColors.RESET);
+	    		int nb = clavier.nextInt() ;
+	    		ges.ajouter_personne_selon_gouvernorat(ch,nb);
+				
+	        	// Quit Section
+          		quit(ges,3);
+          		break;
+	        }
 	        //gouvernorat 
-	        case 3 :     	
+	        case 4 :     	
 	        	{	
 	        		String quit;
 		        	int p = choix_menu_gouvernorat();
@@ -846,7 +863,7 @@ public class Test {
 			             		System.out.println("Le "+c+ConsoleColors.GREEN+" Ajoutée avec succées"+ConsoleColors.RESET);                		
 			             		      	             		
 			             		// Quit Section
-        	             		quit(ges,3);
+        	             		quit(ges,4);
 			             		break ;
 		            		}
 			            	// Supprimer centre
@@ -859,7 +876,7 @@ public class Test {
 									System.out.println(ConsoleColors.GREEN+"Centre Supprimée avec succée");
 		     	             		
 				             		// Quit Section
-	        	             		quit(ges,3);
+	        	             		quit(ges,4);
 							}
 	            		}
 	            		prog_principale(ges,0);
@@ -878,7 +895,7 @@ public class Test {
 	        				String[][] m = tableConsole.changeformat_centre(L);
 	        				tableConsole.tableWithLinesAndMaxWidth(m);
      	             		// Quit Section
-        	             	quit(ges,3);
+        	             	quit(ges,4);
 	        		}
 	        		// Statistique
 	        		case 3 :
@@ -887,16 +904,16 @@ public class Test {
 		        			System.out.println(ConsoleColors.RED+"le poucentage de contamination est du "+
 	        				gouv.get_nom()+" est " + pourcentage + "%"+ConsoleColors.RESET);
      	             		// Quit Section
-        	             	quit(ges,3);
+        	             	quit(ges,4);
 		             		break ;
 	        			}
 	        		}
 	            // Quit Section
-	            quit(ges,3);
+	            quit(ges,4);
 	        	break ;
 	        }        		
 	        //gestion         	
-	        case 4 :
+	        case 5 :
 	        {	
 	        	String quit;
 	        	int p = choix_menu_gestion();
@@ -913,7 +930,7 @@ public class Test {
 					String[][] m = tableConsole.changeformat_gouvernorat(L);
 					tableConsole.tableWithLinesAndMaxWidth(m);
 					// Quit Section
-		            quit(ges,4);
+		            quit(ges,5);
 					break ;
 	    			
 	    		}
@@ -925,7 +942,11 @@ public class Test {
 	          		  "1- Ajouter gouvernorat   "
 	          		+ "2- Suprimer gouvernorat ", 120 - 2), 120, "|")+ConsoleColors.RESET);
 	        		System.out.println(ConsoleColors.BLUE+StringUtils.rightPad("+", 120 - 1, "-") + "+"+ConsoleColors.RESET);
-	        		int i = clavier.nextInt();
+	        		int i ;
+	        		do {
+	        			System.out.println(ConsoleColors.RED_BOLD+"Tapez un numéro entre 1 et 2");
+	        			i = clavier.nextInt();
+	        		}while(i<1||i>2);
 	        		switch (i) {
 	        		// Ajouter gouvernorat
 		        		case 1 :
@@ -946,7 +967,7 @@ public class Test {
 		        						+ " il existe déja 24 gouvernorats ");
 		        			}
 		        			// Quit Section
-				            quit(ges,4);
+				            quit(ges,5);
 							break ;
 						}
 		        		//Supprimer gouvernorat
@@ -962,7 +983,7 @@ public class Test {
 							System.out.println(ConsoleColors.GREEN+"Gouvernorat "+gouv.get_nom()+" supprimée avec succée "+
 							ConsoleColors.RESET);
 							// Quit Section
-				            quit(ges,4);
+				            quit(ges,5);
 							break ;
 						}
 	        		}
@@ -975,12 +996,12 @@ public class Test {
 	    			System.out.println(ConsoleColors.GREEN+"le nomre totale de personnes acceillies est "+ConsoleColors.RESET+ConsoleColors.BLACK_BOLD +nombre+ConsoleColors.RESET); 
 	    			System.out.println(ConsoleColors.RED+"le poucentage de contamination est " +ConsoleColors.RESET+ConsoleColors.BLACK_BOLD +  pourcentage + "% "+ConsoleColors.RESET); 
 	    			// Quit Section
-		            quit(ges,4);
+		            quit(ges,5);
 	    			break ;
 	    		}
 	    		     
 	    	}
-	    		quit(ges,4);
+	    		quit(ges,5);
     			break ;
 	    	}
 	        
@@ -1015,8 +1036,8 @@ public class Test {
         Gestion ges = new Gestion(); //C'est notre systéme 
         ges.init_gouvernorat(); // tous les gouvernorat sont ajoutées au systéme
         ges.init_centre(); // initialisation des centres
-        ges.initpersonne("/files/personneCentre1.csv",123);
-        ges.initchambre("/files/chambreCentre1.csv", 123);
+        ges.initpersonne("/files/personneCentre1.csv",124);
+        ges.initchambre("/files/chambreCentre1.csv", 124);
         
         Test.prog_principale(ges,0);
         

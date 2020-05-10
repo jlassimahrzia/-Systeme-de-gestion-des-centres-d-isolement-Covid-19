@@ -10,6 +10,8 @@ import java.util.stream.Stream;
 
 public class tableConsole {
 	
+	
+	
 	public static String[][] changeformat_gouvernorat(ArrayList<Gouvernorat> list){
 		String[][] t = new String[list.size()+1][3] ;
 		t[0][0] = "Numéro" ; t[0][1] = "Nom" ; t[0][2] ="Nombres Des Centres" ;
