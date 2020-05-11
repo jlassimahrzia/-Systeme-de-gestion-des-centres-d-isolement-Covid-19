@@ -201,22 +201,20 @@ public class Gestion {
         int[] tab = new int[nb];int j=0;
         //Liste centre disponible Dans 
         int b=0; // variable d'incrémentation jusqu'a le nombre demander atteint
-        int nbrp=0;//nb personne
+       
         ArrayList <Centre>  listecentre =g.get_list_Centres();
         for(Centre c:  listecentre ){
-            if((c.getCapacite()>c.nombre_chambre_libre_desinfecter())||(b<nb)){
-            	if((nb-b)>=c.nombre_chambre_libre_desinfecter()) {
+            if((c.getCapacite()>c.nombre_chambre_libre_desinfecter())&&(b<nb)){
+            	listecentreDispo.add(c) ;
+            	if(b<=c.nombre_chambre_libre_desinfecter()) {
             		b+=c.nombre_chambre_libre_desinfecter();
-            		nbrp=c.nombre_chambre_libre_desinfecter();
+            		tab[j]=c.nombre_chambre_libre_desinfecter();
+            		j++;
             	}
             	else {
-            		nbrp=nb-b;
-            		b=b+(nb-b);
-            	}
-            	if(nbrp!=0) {
-            		tab[j]=nbrp;
+            		tab[j]=nb-b;
             		j++;
-            		listecentreDispo.add(c) ;
+            		b+=nb-b;
             	}
              }
         }               
@@ -228,20 +226,17 @@ public class Gestion {
               ArrayList <Centre>  lc=g1.get_list_Centres();
                        
               for(Centre c:  lc ){
-                  if((c.getCapacite()>c.nombre_chambre_libre_desinfecter()) || (b<nb)){
-                	  if((nb-b)>=c.nombre_chambre_libre_desinfecter()) {
-                  		b+=c.nombre_chambre_libre_desinfecter();
-                  		nbrp=c.nombre_chambre_libre_desinfecter();
-	                  	}
-	                  	else {
-	                  		nbrp=nb-b;
-	                  		b=b+(nb-b);
-	                  	}
-	                  	if(nbrp!=0) {
-	                  		tab[j]=nbrp;
-	                  		j++;
-	                  		listecentreDispo.add(c) ;
-                  	}
+                  if((c.getCapacite()>c.nombre_chambre_libre_desinfecter())&&(b<nb)){
+                	  listecentreDispo.add(c) ;
+                	  if(b<=c.nombre_chambre_libre_desinfecter()) {
+                		b+=c.nombre_chambre_libre_desinfecter();
+                  		tab[j]=c.nombre_chambre_libre_desinfecter();
+                  		j++;
+                	  }else {
+                		tab[j]=nb-b;
+                  		j++;
+                  		b+=nb-b;	
+                  	  }
                   }
               }
               i++; 
@@ -313,10 +308,10 @@ public class Gestion {
  		Personne p = new Personne(numcin,nom,prenom,genre.charAt(0),date,gouv,type,etat);
  		c.ajouter_personne(p);
  		// Si ajouter c bn il faut l'affectée à une chambre
- 			System.out.println(ConsoleColors.BLUE+"Liste des chambre disponibles "+ConsoleColors.RESET);
+ 		System.out.println(ConsoleColors.BLUE+"Liste des chambre disponibles "+ConsoleColors.RESET);
 			ArrayList<Chambre> listcld = c.list_chambre_libre_desinfecter();
-			String[][] matrice = tableConsole.changeformat_chambre(listcld);
-			tableConsole.tableWithLinesAndMaxWidth(matrice);
+			String[][] table = tableConsole.changeformat_chambre(listcld);
+			tableConsole.tableWithLinesAndMaxWidth(table);
 			System.out.println(ConsoleColors.GREEN+"Entrez le num de chambre :"+ConsoleColors.RESET);
 			int numch ;
 			do {
@@ -328,8 +323,8 @@ public class Gestion {
 	public void ajoutpersonne(ArrayList <Centre> list ,int nb,String gouv) {
 		int b =0;
 		for(Centre c:  list ){
-			while(b<nb) {
-				System.out.println(ConsoleColors.BLUE+"Entrez les données de personne num "+(b+1)
+		while((c.getCapacite()>c.nombre_chambre_libre_desinfecter())&&(b<nb)) {
+            System.out.println(ConsoleColors.BLUE+"Entrez les données de personne num "+(b+1)
             			+ConsoleColors.RESET);
             	this.entrezpersonne(c, gouv);
      			// c bn

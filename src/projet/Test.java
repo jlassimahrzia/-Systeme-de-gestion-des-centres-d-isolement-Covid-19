@@ -1048,11 +1048,11 @@ public class Test {
         ges.init_centre(); // initialisation des centres
         //init personne
         ges.initpersonne("/files/personneCentre1.csv",123);
-        ges.initpersonne("/files/personneCentre3.csv",125);
+        ges.initpersonne("/files/personneCentre3.csv",124);
         //init chambre
         ges.initchambre("/files/chambreCentre1.csv", 123);
-        ges.initchambre("/files/chambreCentre2.csv", 124);
-        ges.initchambre("/files/chambreCentre3.csv", 125);
+        ges.initchambre("/files/chambreCentre2.csv", 125);
+        ges.initchambre("/files/chambreCentre3.csv", 124);
         Test.prog_principale(ges,0);
         
 	}//fin main
